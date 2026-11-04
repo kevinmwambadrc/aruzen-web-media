@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "Aruzen · Media Sniffer",
+  "version": "1.0.0",
+  "description": "Repère les fichiers vidéo et audio chargés par la page (MP4, MP3, flux HLS m3u8, DASH) et les télécharge.",
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "nativeMessaging",
+    "webRequest",
+    "storage",
+    "downloads"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArO/Kc4mPBD+pv4JuStEa+/LFprWRePaJu7l6fO8dCcWoUs0okwsEAaa/FYvD4TJG/HhsTquNPw0Z9ZQSaNOE9hXq2JKdBgO36D0rticmtITd5wfVc41sf6UwBTa8USVMrceX49thkNRP5bd0WXX1WVuqmZVVfHBquaujLNJ1p5dxLhv3c+bPmsOwt3P5RVMAaKTAjsnPjKRQ4EXZEy1bfRtWhiHgueSXpLe/U1lJLs5elMDDB3sL+m07/TbNXvWGHlz2PCTjP+3I+E4egBLHBJUtGzC9cVWCUPqbVRvwjPwdPXfXS1zUNEgXr7l/1xuYvaRUvwHGaRxNPPFQxKwfLwIDAQAB"
+}

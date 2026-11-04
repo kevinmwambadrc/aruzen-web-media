@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Retouche · Aruzen</title>
+  <link rel="icon" href="icons/32.png">
+  <link rel="stylesheet" href="editor.css">
+</head>
+<body>
+  <header>
+    <img src="icons/32.png" alt=""><h1>Retouche</h1>
+    <nav class="seg" id="tools">
+      <button data-t="brush" class="on" title="Pinceau (B)">🖌 Pinceau</button><button data-t="rect" title="Rectangle (R)">▭ Rectangle</button><button data-t="erase" title="Gomme du masque (E)">⌫ Gomme</button>
+    </nav>
+    <label>Taille <input id="size" type="range" min="3" max="200" value="24"><span id="sizeV" class="mut"></span></label>
+    <button id="clearMask" class="ghost" title="Retirer toute la sélection">Effacer la sélection</button>
+    <span class="grow"></span>
+    <label>Zoom <select id="zoom"><option value="fit">Ajuster</option><option value="0.5">50 %</option><option value="1">100 %</option><option value="2">200 %</option></select></label>
+    <button id="undo" class="ghost" title="Annuler (⌘Z)" disabled>↶ Annuler</button>
+    <button id="compare" class="ghost" title="Maintenir pour voir l'original">Avant / après</button>
+    <button id="apply" class="primary" title="Entrée" disabled>Effacer la zone</button>
+    <select id="fmt" aria-label="Format"><option value="png">PNG</option><option value="jpeg">JPG</option><option value="webp">WebP</option></select>
+    <button id="save" disabled>Enregistrer</button>
+  </header>
+  <div id="status" class="status">Ouvre une image : glisse-la ici, colle-la (⌘V), <label class="link">choisis un fichier<input id="file" type="file" accept="image/*" hidden></label>, ou fais un clic droit sur une image du web › « Retoucher cette image ».</div>
+  <main id="stage">
+    <div id="wrap" hidden><canvas id="img"></canvas><canvas id="mask"></canvas><canvas id="cursor"></canvas></div>
+  </main>
+  <footer class="mut">Peins sur la zone à faire disparaître en débordant un peu, puis « Effacer la zone ». Répète en plusieurs petites passes pour les grandes zones. À utiliser sur tes images ou celles dont tu as les droits.</footer>
+  <script type="module" src="editor.js"></script>
+</body>
+</html>

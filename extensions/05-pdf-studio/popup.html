@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8"><title>PDF Studio</title><link rel="stylesheet" href="shared/ui.css"></head>
+<body style="--accent:#dc2626">
+  <header><img src="icons/32.png" alt=""><h1>PDF Studio</h1></header>
+  <main>
+    <div class="card">
+      <div class="title" id="ptitle"></div>
+      <div class="row" style="margin-top:8px">
+        <label><input type="checkbox" id="landscape"> Paysage</label>
+        <label><input type="checkbox" id="background" checked> Couleurs de fond</label>
+        <label><input type="checkbox" id="margins" checked> Marges</label>
+      </div>
+      <div class="row" style="margin-top:8px"><button id="print" class="primary grow">Enregistrer la page en PDF</button></div>
+      <div id="pmsg" class="mut small"></div>
+    </div>
+    <div id="thispdf"></div>
+    <h2>PDF liés sur cette page</h2>
+    <div id="list" class="list"><div class="empty">Recherche…</div></div>
+    <div class="row"><label><input type="checkbox" id="all"> Tout cocher</label><span class="grow"></span><button id="dl">Télécharger la sélection</button></div>
+  </main>
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

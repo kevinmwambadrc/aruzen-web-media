@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8"><title>Image Grab</title><link rel="stylesheet" href="shared/ui.css"></head>
+<body style="--accent:#16a34a">
+  <header><img src="icons/32.png" alt=""><h1>Image Grab</h1><span class="grow"></span><span id="count" class="mut"></span></header>
+  <main>
+    <div class="row">
+      <label>Taille min.
+        <select id="min"><option value="0">Toutes</option><option value="100" selected>100 px</option><option value="300">300 px</option><option value="800">800 px</option></select>
+      </label>
+      <label><input type="checkbox" id="all"> Tout cocher</label>
+    </div>
+    <div id="grid" class="grid"></div>
+    <button id="dl" class="primary">Télécharger la sélection</button>
+  </main>
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

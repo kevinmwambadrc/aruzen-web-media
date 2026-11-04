@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Image HD · Aruzen</title>
+  <link rel="icon" href="icons/32.png">
+  <link rel="stylesheet" href="results.css">
+</head>
+<body>
+  <header>
+    <img src="icons/32.png" alt=""><div class="ttl"><h1>Image HD</h1><div id="page" class="mut"></div></div>
+    <span class="grow"></span>
+    <label>Taille min. <select id="min"><option value="0">Toutes</option><option value="200" selected>200 px</option><option value="500">500 px</option><option value="1000">1000 px</option></select></label>
+    <label><input type="checkbox" id="onlyHd"> Seulement les images agrandies</label>
+    <label><input type="checkbox" id="all"> Tout cocher</label>
+    <button id="dl" class="primary" disabled>Télécharger</button>
+  </header>
+  <div id="status" class="status"><i id="bar"></i><span id="msg">Analyse de la page…</span></div>
+  <main id="grid" class="grid"></main>
+  <script type="module" src="results.js"></script>
+</body>
+</html>

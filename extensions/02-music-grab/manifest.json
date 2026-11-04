@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "Aruzen · Music Grab",
+  "version": "1.0.0",
+  "description": "Extrait l'audio d'une page (plateformes vidéo et musicales) en MP3, M4A, FLAC ou WAV avec pochette et tags.",
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "nativeMessaging",
+    "contextMenus",
+    "storage",
+    "activeTab"
+  ],
+  "commands": {
+    "download-audio": {
+      "suggested_key": {
+        "default": "Alt+Shift+M"
+      },
+      "description": "Télécharger la musique de l'onglet"
+    }
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyyA+5d7GWwmMSWA9AUK1UN3Yh5R3z9DavBfMWlsCHKw87kVMoMcMpK9ve+xAKMd4+kZO4m+aZYgWa7HjN7pBYu0CRENwbLVPKfxc8cJMPEyJU6joDCZoqUfWbeelJUB463YTqYd+dhPyaXrE7AN1liUeZchscmUpTlX6Pj2Qa992kdNhZO+nCx+vWoMpsReJrGEjznAIhyl2cwbrjcm8JUSMtQmwt+bCD979BEDIRLeh3PkNcbTNY0Rd6kR+HtJINu8EWiRB/caNrdh+ysPsLVML2rhj292w09f8mgKodmTN+fIT6avtmmSckiO4+n0XM3j5sTDDF77XMbtEvK8OFwIDAQAB"
+}

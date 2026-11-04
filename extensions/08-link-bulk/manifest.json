@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "Aruzen · Liens en masse",
+  "version": "1.0.0",
+  "description": "Liste tous les fichiers liés d'une page (documents, archives, audio, vidéo, apps…), filtre et télécharge la sélection.",
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "downloads",
+    "scripting",
+    "activeTab",
+    "storage"
+  ],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1exsxPbDp+YoIFhlDIpRfgU7EOJCmAZmOpP9ojqAEnCRaaSZvfVIurVF2gpBMQia5O/UriybngJuAFx5zq52y+4u8oQpWRp6Ro3IaOvWaG2cGYcHZj8tGcCSHkC0kz0pjtr4FYYTVM0TH1djLJrUZ7B9ZlbaBZU+MeZXAoi4MSls9bwCDqtzf69xZp4AsiUcPEfIAwCe9FQmA3cLDosNStkqcsFx39Us9EFqJ+fIZV19KN9N2nd+48c78shhDIXBklQhHj8URKHH5gB6i3G8OgTBdGZgN1ag9n+aUxC6ojkD1Y4pFijv7AMiS6snGCWVNuW0OKrqHq1AdpDkO5eiWwIDAQAB"
+}

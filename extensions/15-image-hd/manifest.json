@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "Aruzen · Image HD",
+  "version": "1.0.0",
+  "description": "Retrouve la version haute définition des images d'une page, même quand le site n'affiche qu'une miniature : srcset, attributs cachés, liens, métadonnées, code de la page et règles pour les plateformes courantes.",
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "action": {
+    "default_title": "Chercher les images HD de cette page",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "downloads",
+    "scripting",
+    "contextMenus",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxHV0yeJeD+RMF9ZMSIxYITqu7h5cI4Jgb9S+Poig3hu12dENSfPOK+9/hI8PcfOLszoUavqdgmFF1PsIcKzaVbYsFWtk1VzG91m4azvcyQ3GC12vAfuCTcMd1orRo0KJu30cNT9J3CCfz/2+EoQv0qoM8dodzAdYpfWhlz0fFZ/2J6ZEoPewNv0i+xnEnd7OfxmV1DNIe396KJs/Vy6QsavTv/MQxpvqbDiBirDlkWs04gYEIog2q+WdvTL5CUoj15PQgoUmUZMxRDGdwZ2d1xo1CBGOQbtEc40X0e8eVPermCyUE69pecDtnDieHGuaQLOsgTh+UwMO80szFaynBwIDAQAB"
+}

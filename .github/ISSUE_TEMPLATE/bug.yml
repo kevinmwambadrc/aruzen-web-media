@@ -1,0 +1,22 @@
+name: Signaler un bug
+description: Une extension ne se comporte pas comme prévu
+labels: [bug]
+body:
+  - type: dropdown
+    id: extension
+    attributes:
+      label: Extension
+      options: [01 Vidéo Grab, 02 Music Grab, 03 Playlist Grab, 04 Media Sniffer, 05 PDF Studio, 06 Image Grab, 07 Sous-titres & Miniatures, 08 Liens en masse, 09 Enregistreur d'onglet, 10 Widget vidéo, 11 Design Kit, 12 Research, 13 Social, 14 Workspace, 15 Image HD, 16 Retouche, Hôte local / widget]
+    validations: {required: true}
+  - type: input
+    id: browser
+    attributes: {label: Navigateur et version, placeholder: "Chrome 142, Edge 142…"}
+    validations: {required: true}
+  - type: textarea
+    id: steps
+    attributes: {label: Étapes pour reproduire, description: "N'indique pas d'adresse privée ni de donnée personnelle."}
+    validations: {required: true}
+  - type: textarea
+    id: expected
+    attributes: {label: Résultat attendu et résultat obtenu}
+    validations: {required: true}

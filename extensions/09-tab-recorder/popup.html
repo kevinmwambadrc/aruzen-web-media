@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8"><title>Enregistreur d'onglet</title><link rel="stylesheet" href="shared/ui.css">
+<style>.timer { font: 600 28px/1 ui-monospace, "SF Mono", monospace; text-align: center; padding: 6px 0; }</style></head>
+<body style="--accent:#dc2626">
+  <header><img src="icons/32.png" alt=""><h1>Enregistreur d'onglet</h1></header>
+  <main>
+    <div class="card">
+      <div class="title" id="ttitle"></div>
+      <div class="timer" id="timer">00:00</div>
+      <div class="row" id="opts">
+        <label><input type="checkbox" id="audio" checked> Son</label>
+        <label>Qualité <select id="bitrate"><option value="2500000">Standard</option><option value="5000000" selected>Haute</option><option value="8000000">Très haute</option></select></label>
+      </div>
+    </div>
+    <button id="toggle" class="primary">● Démarrer l'enregistrement</button>
+    <div id="msg" class="mut small">Le fichier est enregistré dans Téléchargements › Web Media › Enregistrements. Tu peux fermer cette fenêtre pendant l'enregistrement.</div>
+  </main>
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

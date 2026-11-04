@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Carnet de recherche · Aruzen</title>
+  <link rel="icon" href="icons/32.png">
+  <link rel="stylesheet" href="notebook.css">
+</head>
+<body>
+  <header>
+    <div class="top"><img src="icons/32.png" alt=""><h1>Carnet de recherche</h1></div>
+    <div class="tools">
+      <select id="project" aria-label="Projet"></select>
+      <input id="q" type="search" placeholder="Rechercher dans les citations et notes…">
+    </div>
+    <div class="tools">
+      <span id="count" class="mut"></span><span class="grow"></span>
+      <button id="copy">Copier en Markdown</button>
+      <button id="export" class="primary">Exporter .md</button>
+    </div>
+  </header>
+  <main id="list"></main>
+  <script type="module" src="notebook.js"></script>
+</body>
+</html>

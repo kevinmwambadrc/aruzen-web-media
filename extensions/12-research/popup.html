@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"><title>Research</title>
+  <link rel="stylesheet" href="shared/ui.css"><link rel="stylesheet" href="popup.css">
+</head>
+<body style="--accent:#6a3de8">
+  <header><img src="icons/32.png" alt=""><h1>Research</h1><span class="grow"></span><button id="panel" class="mini">Carnet ↗</button></header>
+  <nav class="tabs">
+    <button data-tab="carnet" class="on">Carnet</button>
+    <button data-tab="sessions">Sessions</button>
+    <button data-tab="veille">Veille</button>
+  </nav>
+
+  <main id="carnet" class="pane">
+    <div class="row">
+      <label class="grow">Projet <select id="project" class="grow"></select></label>
+      <button id="addProject" class="mini" title="Nouveau projet">＋</button>
+    </div>
+    <div class="row" id="newRow" hidden><input id="newName" type="text" class="grow" placeholder="Nom du projet (client, mémoire, veille…)"><button id="newOk" class="mini">Créer</button></div>
+    <h2>Sur cette page</h2>
+    <div id="here" class="list"></div>
+    <label><input type="checkbox" id="selBar"> Barre de couleurs à la sélection</label>
+    <div class="mut small">Sélectionne un texte puis choisis une couleur, ou ⌥⇧H, ou clic droit › Surligner. Clique sur un surlignage pour ajouter une note.</div>
+    <div class="row"><button id="exportAll" class="grow">Exporter le projet (.md)</button><button id="openTab" class="primary grow">Ouvrir le carnet</button></div>
+  </main>
+
+  <main id="sessions" class="pane" hidden>
+    <div class="row"><input id="sName" type="text" class="grow" placeholder="Nom de la session"><button id="sSave" class="primary">Sauver la fenêtre</button></div>
+    <div id="sList" class="list"></div>
+    <h2>Mémoire</h2>
+    <div class="card row">
+      <button id="free" class="primary">Libérer la mémoire maintenant</button>
+      <span id="freeMsg" class="mut small"></span>
+      <label>Endormir les onglets inactifs après
+        <select id="hib"><option value="0">jamais</option><option value="15">15 min</option><option value="30">30 min</option><option value="60">1 h</option><option value="120">2 h</option></select>
+      </label>
+    </div>
+    <div class="mut small">Un onglet endormi garde sa place ; il se recharge quand tu cliques dessus. Les onglets épinglés et ceux qui jouent du son ne sont jamais endormis.</div>
+  </main>
+
+  <main id="veille" class="pane" hidden>
+    <div class="card">
+      <div class="title1" id="wTitle"></div>
+      <div class="row" style="margin-top:8px">
+        <label>Vérifier <select id="wEvery"><option value="60">toutes les heures</option><option value="360" selected>toutes les 6 h</option><option value="1440">chaque jour</option></select></label>
+      </div>
+      <div class="row" style="margin-top:6px"><input id="wSel" type="text" class="grow" placeholder="Zone précise (sélecteur CSS, facultatif)"></div>
+      <div class="row" style="margin-top:8px"><button id="wAdd" class="primary grow">Surveiller cette page</button></div>
+      <div id="wMsg" class="mut small"></div>
+    </div>
+    <div id="wList" class="list"></div>
+    <div class="mut small">Idéal pour les concurrents, les appels d'offres, les pages d'actualités et les tarifs. Les pages construites entièrement en JavaScript peuvent ne pas être lisibles.</div>
+  </main>
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

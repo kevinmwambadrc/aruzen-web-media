@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Aruzen · Playlist Grab",
+  "version": "1.0.0",
+  "description": "Télécharge une playlist, un album ou une chaîne entière (vidéo ou audio), avec choix des éléments.",
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png"
+    }
+  },
+  "permissions": [
+    "nativeMessaging",
+    "storage",
+    "activeTab"
+  ],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr3gMdsx/CkrkUrUUDUqGVnLu7FEcxErS81shlKZCxEjCzvwmqKDlQ2F8XxdH6kQ1AFXZmnqtigOH/mrYRi6baVPgInR48BO1kEf7bZVnVwbTB0ymrlLvzRqkFmz4lk2zTMAxrYOqvwlwNS8xIPWPcZWGyY2beq372fI0HQlW2mFI3CzjZfLabvObDj7OkeNcEJe/Cab4HNFAddmwaeaujdA6cRFM8LJPOKZXvkJumC5Xcov9NBPSuOq4wmNNjEm4l+0JmI4OBijUQWDqTN60o5lhP1BnchKKq739xyJtC9W4YipfYLVSOIJQUih0gtaCu1bzVBH3bLyE3GAPM6JrTwIDAQAB"
+}

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Workspace · Aruzen</title>
+  <link rel="icon" href="icons/32.png">
+  <link rel="stylesheet" href="workspace.css">
+</head>
+<body>
+  <header>
+    <img src="icons/32.png" alt=""><h1>Workspace</h1>
+    <nav class="seg">
+      <button data-v="taches" class="on">Tâches</button><button data-v="temps">Feuille de temps</button>
+      <button data-v="prompts">Prompts</button><button data-v="reglages">⚙ Réglages</button>
+    </nav>
+  </header>
+
+  <section id="taches" class="view">
+    <div class="bar">
+      <select id="fState"><option value="open">À faire</option><option value="done">Terminées</option><option value="all">Toutes</option></select>
+      <select id="fClient"></select>
+      <span class="grow"></span><span id="tCount" class="mut"></span>
+    </div>
+    <table><thead><tr><th></th><th>Tâche</th><th>Client</th><th>Échéance</th><th>Notion</th><th></th></tr></thead><tbody id="tBody"></tbody></table>
+  </section>
+
+  <section id="temps" class="view" hidden>
+    <div class="bar">
+      <select id="period"><option value="week">Cette semaine</option><option value="month" selected>Ce mois-ci</option><option value="last">Mois dernier</option><option value="all">Tout</option></select>
+      <select id="eClient"></select>
+      <span class="grow"></span>
+      <button id="csv" class="primary">Exporter CSV (Excel)</button>
+    </div>
+    <div id="summary" class="cards"></div>
+    <details class="add"><summary>＋ Ajouter un temps oublié</summary>
+      <div class="bar">
+        <select id="mClient"></select><input id="mProject" type="text" placeholder="Projet">
+        <input id="mDate" type="date"><input id="mStart" type="time" value="09:00">
+        <input id="mDur" type="text" placeholder="Durée (1:30)" size="8"><input id="mNote" type="text" placeholder="Note">
+        <button id="mAdd">Ajouter</button>
+      </div>
+    </details>
+    <table><thead><tr><th>Date</th><th>Client</th><th>Projet</th><th>Note</th><th>Durée</th><th></th></tr></thead><tbody id="eBody"></tbody></table>
+  </section>
+
+  <section id="prompts" class="view" hidden>
+    <div class="bar"><span class="mut">Écris des {variables} entre accolades : un formulaire les demandera au moment d'insérer.</span><span class="grow"></span><button id="pAdd" class="primary">＋ Nouveau prompt</button></div>
+    <div id="pEdit" class="prompts"></div>
+  </section>
+
+  <section id="reglages" class="view" hidden>
+    <h2>Notion</h2>
+    <div class="panel">
+      <ol class="mut">
+        <li>Va sur notion.so/my-integrations › « Nouvelle intégration » (interne), puis copie le jeton secret.</li>
+        <li>Dans Notion, ouvre ta base de tâches › ⋯ › Connexions › ajoute cette intégration.</li>
+        <li>Colle le jeton ci-dessous : il reste dans ce navigateur et sert uniquement à créer tes tâches.</li>
+      </ol>
+      <div class="bar"><input id="nToken" type="password" placeholder="Jeton secret Notion (ntn_…)" autocomplete="off"><button id="nConnect" class="primary">Connecter</button></div>
+      <div id="nDbBox" hidden>
+        <div class="bar"><label>Base de tâches <select id="nDb"></select></label></div>
+        <div class="map" id="nMap"></div>
+        <div class="bar"><button id="nSave" class="primary">Enregistrer</button><button id="nOff">Déconnecter</button></div>
+      </div>
+      <div id="nMsg" class="mut"></div>
+    </div>
+    <h2>Clients et tarifs</h2>
+    <div class="panel">
+      <table><thead><tr><th>Client</th><th>Tarif horaire</th><th>Devise</th><th></th></tr></thead><tbody id="cBody"></tbody></table>
+      <button id="cAdd">＋ Ajouter un client</button>
+      <datalist id="currencies"><option>USD</option><option>CDF</option><option>EUR</option><option>XAF</option><option>ZAR</option><option>GBP</option></datalist>
+    </div>
+    <h2>Chronomètre</h2>
+    <div class="panel"><label><input type="checkbox" id="idleStop"> Arrêter le chrono si le Mac est verrouillé ou inactif pendant 10 minutes</label></div>
+    <h2>Sauvegarde</h2>
+    <div class="panel">
+      <div class="bar"><button id="exportSettings">Exporter mes réglages</button>
+        <label class="pick">Importer un fichier<input id="importSettings" type="file" accept="application/json,.json" hidden></label>
+        <span id="ioMsg" class="mut"></span></div>
+      <p class="mut">Le fichier contient les clients, les prompts et les réglages du chrono (pas le jeton Notion, ni les tâches et les temps).</p>
+    </div>
+  </section>
+  <script type="module" src="workspace.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8"><title>Liens en masse</title><link rel="stylesheet" href="shared/ui.css"></head>
+<body style="--accent:#4f46e5">
+  <header><img src="icons/32.png" alt=""><h1>Liens en masse</h1><span class="grow"></span><span id="count" class="mut"></span></header>
+  <main>
+    <div id="cats" class="chips"></div>
+    <input id="filter" type="text" placeholder="Filtrer (nom, extension, mot du lien)…">
+    <div id="list" class="list"></div>
+    <div class="row"><label><input type="checkbox" id="all"> Tout cocher</label><span class="grow"></span><button id="dl" class="primary">Télécharger</button></div>
+    <div class="mut small">3 fichiers à la fois, rangés dans Téléchargements › Web Media › Fichiers.</div>
+  </main>
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

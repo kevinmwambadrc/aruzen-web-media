@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8"><title>Media Sniffer</title><link rel="stylesheet" href="shared/ui.css"></head>
+<body style="--accent:#f59e0b">
+  <header><img src="icons/32.png" alt=""><h1>Media Sniffer</h1><span class="grow"></span><button id="folder" class="mini">Dossier</button></header>
+  <main>
+    <div class="mut">Médias détectés pendant la lecture. Lance la vidéo ou la musique si la liste est vide.</div>
+    <div id="list" class="list"></div>
+    <div class="row"><button id="page" class="grow">Analyser la page avec yt-dlp</button></div>
+    <h2>Flux en cours</h2>
+    <div id="jobs" class="jobs"></div>
+  </main>
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

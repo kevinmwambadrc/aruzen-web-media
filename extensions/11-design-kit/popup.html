@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"><title>Design Kit</title>
+  <link rel="stylesheet" href="shared/ui.css"><link rel="stylesheet" href="popup.css">
+</head>
+<body style="--accent:#ff3d7f">
+  <header><img src="icons/32.png" alt=""><h1>Design Kit</h1><span class="grow"></span><span id="host" class="mut small"></span></header>
+  <nav class="tabs">
+    <button data-tab="charte" class="on">Charte</button>
+    <button data-tab="svg">SVG</button>
+    <button data-tab="mood">Moodboard</button>
+    <button data-tab="mesure">Mesure</button>
+  </nav>
+
+  <main id="charte" class="pane">
+    <h2>Couleurs <span class="mut small">(clic = copier)</span></h2>
+    <div id="swatches" class="swatches"><div class="empty">Analyse de la page…</div></div>
+    <div id="varsBox" hidden><h2>Variables CSS du site</h2><div id="vars" class="vars"></div></div>
+    <h2>Polices</h2>
+    <div id="fonts" class="list"></div>
+    <h2>Exporter</h2>
+    <div class="row">
+      <button id="xAse" class="primary">Nuancier .ase</button>
+      <button id="xSvg">Planche .svg</button>
+      <button id="xCss">Variables CSS</button>
+      <button id="xJson">JSON</button>
+    </div>
+    <div class="mut small">Le .ase s'ouvre dans Illustrator : Nuancier › Ouvrir une bibliothèque de nuances › Autre bibliothèque.</div>
+  </main>
+
+  <main id="svg" class="pane" hidden>
+    <div class="row"><span id="svgCount" class="mut grow"></span><label><input type="checkbox" id="svgAll"> Tout cocher</label></div>
+    <div id="svgGrid" class="svggrid"></div>
+    <div class="row"><button id="svgDl" class="primary grow">Télécharger la sélection</button></div>
+    <div class="mut small">Double-clic sur une icône : son code est copié, colle-le directement dans Illustrator (⌘V).</div>
+  </main>
+
+  <main id="mood" class="pane" hidden>
+    <div class="row">
+      <label class="grow">Tableau <select id="board" class="grow"></select></label>
+      <button id="newBoard" class="mini" title="Nouveau tableau">＋</button>
+    </div>
+    <div class="row" id="newRow" hidden>
+      <input id="newName" type="text" class="grow" placeholder="Nom du tableau (client, campagne…)"><button id="newOk" class="mini">Créer</button>
+    </div>
+    <div class="row">
+      <button id="capPage" class="grow">Capturer la page</button>
+      <button id="openBoard" class="primary grow">Ouvrir le moodboard</button>
+    </div>
+    <div id="moodRecent" class="thumbs"></div>
+    <div class="mut small">Clic droit sur une image (Pinterest, Behance, n'importe quel site) › « Ajouter au moodboard ». Sur Pinterest, l'image originale en haute définition est récupérée.</div>
+  </main>
+
+  <main id="mesure" class="pane" hidden>
+    <button id="ruler" class="primary">Activer la règle (⌥⇧R)</button>
+    <div class="mut small">Survole un élément pour ses dimensions, marges et typo ; clique pour poser un repère et lire les écarts.</div>
+    <h2>Grille</h2>
+    <div class="card gridform">
+      <label>Colonnes <input type="number" id="gCols" value="12" min="1" max="24"></label>
+      <label>Gouttière <input type="number" id="gGut" value="24" min="0"></label>
+      <label>Largeur max <input type="number" id="gMax" value="1200" min="200"></label>
+      <label>Marges <input type="number" id="gMar" value="16" min="0"></label>
+      <label>Ligne de base <input type="number" id="gBase" value="0" min="0" title="0 = aucune"></label>
+      <button id="gridBtn">Afficher la grille</button>
+    </div>
+    <h2>Captures responsive (page entière)</h2>
+    <div class="chips" id="widths">
+      <label class="chip"><input type="checkbox" value="390" checked> 390 mobile</label>
+      <label class="chip"><input type="checkbox" value="820" checked> 820 tablette</label>
+      <label class="chip"><input type="checkbox" value="1440" checked> 1440 desktop</label>
+      <label class="chip"><input type="checkbox" value="1920"> 1920</label>
+    </div>
+    <div class="row"><label><input type="checkbox" id="retina"> Retina 2×</label><span class="grow"></span><button id="shoot" class="primary">Capturer</button></div>
+    <div id="shootMsg" class="mut small"></div>
+  </main>
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

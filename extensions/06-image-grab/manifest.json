@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "Aruzen · Image Grab",
+  "version": "1.0.0",
+  "description": "Affiche toutes les images d'une page (y compris fonds et haute résolution) et télécharge la sélection en un clic.",
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "downloads",
+    "scripting",
+    "activeTab",
+    "storage"
+  ],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmjoMptsyCGknB/Dtndw0CzgQE2CJ0MuKBToxR6LjetRJUuDO2IiAeXCk1KT9nirGYFFflzy+btBQ7ZvB2vl9C+lHI2RrpYMUV6m6CYhQdJQDhFbsHqU1S0rbiQYxvGoNpbWzurFQr60ihdZ4EoIvIgjCv1lSLaBijN1ZT4ZTneDidbOGxVXOGkR7tsyb1lioxOu3N9aMZ75Xi8Wv40WBZPJSkKX6kE4WT6hXGw43bhEyslBoWCNDZAbkiJv4+ZrZSbzFatL3shiIvq555F7ULobn2s1FUbl8mQmR1nEybbsXsa3lmvWscgKK9Yrv2nH2tHRPmAr4SLxOiYzzaAapPQIDAQAB"
+}

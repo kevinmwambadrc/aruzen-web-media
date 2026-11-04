@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "Aruzen · Design Kit",
+  "version": "1.0.0",
+  "description": "Pipette de charte (couleurs, polices, export .ase Illustrator), SVG Grabber, moodboard, règle, grille et captures responsive.",
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "scripting",
+    "downloads",
+    "storage",
+    "unlimitedStorage",
+    "contextMenus",
+    "debugger",
+    "offscreen"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "commands": {
+    "measure": {
+      "suggested_key": {
+        "default": "Alt+Shift+R"
+      },
+      "description": "Activer / couper la règle"
+    }
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAn6WavtnAGzQQQIdp12mBxjyb2D5bMwC3cdq1F0fUVnYtyZQJ8VUnl/XE/6YoZbJ++Z0V3Fc80xpuXlIWv3N5tzsrsoIdQbbmrBXUP/hXExe989d76dDci2i3KSxR2x77SWhwujetwLZ1bAJdxLS4mFqkqaXJ62rAKxpR/MJki0jSTba3SrROMC6tv01k7Qcfp1LF67qonlrert8vHZeWQFjE3vY6hz7Emeaif3fVl4rGJ5pBGHUKj81jSCdojOqJocL5WaJDz41aUMsfmDHmRebUxN64NYb7GNqkYtXy492dzDuifr5J+qx/fzYdJyryhMSQ0zXx+bKF3PFljrOyzwIDAQAB"
+}

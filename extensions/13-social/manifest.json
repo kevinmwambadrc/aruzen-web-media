@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "Aruzen · Social",
+  "version": "1.0.0",
+  "description": "Studio d'aperçu pour tes réseaux sociaux (et ceux que tu ajoutes), bibliothèque de légendes et hashtags par marque, liens UTM. Tout se règle dans ⚙ Réglages.",
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "side_panel": {
+    "default_path": "studio.html"
+  },
+  "options_page": "options.html",
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "contextMenus",
+    "scripting",
+    "sidePanel",
+    "downloads"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvEHBhCDhEGeaLLmbuM3oRWfiQ+UCqbRvchGPtbl2NAoJKUwuAWeRBgExtwkZKUjqVR8XnIjGaMwUlKAaBL0Y1HKtJtmgdPjNe3FZ7aBsY7KjBPBxHRLUbvwwB6WNRFQuUdhBJQ3FvMXAjVmDa23nazWO3iCs0WTLfoVEwLFUjZO8WN1H4mgCxG0wiU70gmQS5Nyco6gdu7B31RmRKtFT4OJlJrKyRDfYJGM3oh6iVHbFvAJ3NlDyNS7jeNW+ItBQdgidMZ/TSyNgtakNXcqciZtrLZpVCnAKx+wE3DRd1qT+xYmtaJ3AaRhyweQigmpUUVaH8kMxwtr/9jyhlTEwLwIDAQAB"
+}

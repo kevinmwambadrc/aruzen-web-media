@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Studio Social · Aruzen</title>
+  <link rel="icon" href="icons/32.png">
+  <link rel="stylesheet" href="studio.css">
+</head>
+<body>
+  <header>
+    <img src="icons/32.png" alt=""><h1>Studio Social</h1>
+    <select id="brand" aria-label="Marque"></select>
+    <span class="grow"></span>
+    <nav class="seg"><button data-v="post" class="on">Publication</button><button data-v="lib">⚙ Réglages</button></nav>
+  </header>
+
+  <div id="post" class="view">
+    <section class="composer">
+      <textarea id="text" rows="8" placeholder="Écris ta publication… Les liens et #hashtags sont reconnus."></textarea>
+      <div class="bar">
+        <select id="snip" aria-label="Insérer une légende"><option value="">＋ Insérer…</option></select>
+        <span id="stats" class="mut"></span>
+      </div>
+      <div id="drop" class="drop">
+        <div id="dropHint">Glisse une image, colle-la (⌘V), <label class="link">choisis un fichier<input id="file" type="file" accept="image/*" hidden></label>
+          ou clic droit sur une image du web › « Envoyer au studio ».</div>
+        <div id="imgWrap" hidden><img id="src" alt=""><i id="focal"></i></div>
+      </div>
+      <div class="bar" id="imgBar" hidden>
+        <span class="mut">Clique sur l'image pour choisir le point à garder au recadrage.</span><span class="grow"></span>
+        <button id="clearImg" class="ghost">Retirer</button>
+      </div>
+      <div class="nets" id="nets"></div>
+      <div class="bar">
+        <input id="campaign" type="text" placeholder="Nom de campagne (dossier d'export)">
+        <button id="export" class="primary">Exporter les recadrages</button>
+      </div>
+      <div id="exportMsg" class="mut"></div>
+    </section>
+    <section id="previews" class="previews"></section>
+  </div>
+
+  <div id="lib" class="view" hidden>
+    <p class="mut">Tout ce qui est ici t'appartient : ajoute, renomme ou supprime des marques, des réseaux, des légendes. Les changements sont enregistrés tout de suite.</p>
+    <h2>Marques et entreprises</h2>
+    <div id="brands" class="brands"></div>
+    <button id="addBrand" class="ghost">＋ Ajouter une marque</button>
+    <h2>Légendes et hashtags</h2>
+    <div id="snips" class="snips"></div>
+    <button id="addSnip" class="ghost">＋ Ajouter</button>
+    <p class="mut">Variables : {date} se remplit avec la date du jour, {lien} avec le dernier lien UTM copié. Les autres {champs} sont à compléter.</p>
+    <h2>Réseaux sociaux</h2>
+    <div id="netEdit" class="snips"></div>
+    <div class="bar"><button id="addNet" class="ghost">＋ Ajouter un réseau</button><span class="grow"></span><button id="resetNets" class="ghost">Revenir aux réseaux d'origine</button></div>
+    <p class="mut">Limite = nombre maximum de caractères. Formats : « rapport largeur×hauteur », séparés par des virgules ; le premier est le format par défaut. La source et le support servent aux liens UTM.</p>
+    <h2>Sauvegarde</h2>
+    <div class="bar"><button id="exportSettings" class="ghost">Exporter mes réglages</button>
+      <label class="link">Importer un fichier de réglages<input id="importSettings" type="file" accept="application/json,.json" hidden></label>
+      <span id="ioMsg" class="mut"></span></div>
+  </div>
+  <script type="module" src="studio.js"></script>
+</body>
+</html>

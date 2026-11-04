@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8"><title>Vidéo Grab</title><link rel="stylesheet" href="shared/ui.css"></head>
+<body style="--accent:#e11d48">
+  <header><img src="icons/32.png" alt=""><h1>Vidéo Grab</h1><span class="grow"></span><button id="folder" class="mini">Dossier</button></header>
+  <main>
+    <div id="info" class="card"><div class="mut">Analyse de la page…</div></div>
+    <div class="row">
+      <label>Qualité <select id="quality"><option value="best">Meilleure</option></select></label>
+      <label>Format <select id="container"><option value="mp4">MP4</option><option value="mkv">MKV</option></select></label>
+    </div>
+    <div class="row"><input id="url" type="text" class="grow" placeholder="Ou colle un lien vidéo…"><button id="go" class="primary">Télécharger</button></div>
+    <h2>Téléchargements</h2>
+    <div id="jobs" class="jobs"></div>
+  </main>
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

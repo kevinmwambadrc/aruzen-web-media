@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "Aruzen · Enregistreur d'onglet",
+  "version": "1.0.0",
+  "description": "Enregistre la vidéo et le son d'un onglet (lives, cours, réunions web) en MP4, encodage matériel peu gourmand.",
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "tabCapture",
+    "offscreen",
+    "downloads",
+    "storage",
+    "activeTab"
+  ],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA30xlMQg9+5NHFcsyOemrnre4PEU76XtLzgXmErurnhJjANo9OF16aIlIUJ0YBQvHP5cW+UVK25y5fHbV/2t608cbfRWZ1JDmtr4F1fugJWoAoDDw+7RY8dEnWIMckaSjvpQ6kUVLsoXD/mg9ByG0Uw6W0zPRnJuu3pc1/UkSav0UFhLy2eLBYcrx+UrK61re4QllhsxttPWyM2HAaBrGvA9MuxXTty/bYq/SUXNoxU+RqLI9qsNMqitin4DwlSaNiE+g//5GlfHqJcUbo+OqWeI2SxR6c/9T6R1yxB//CCIO4AtgX29wRT2onwkNnX57q9sKBu5ptMuCu/QzhYxNUQIDAQAB"
+}

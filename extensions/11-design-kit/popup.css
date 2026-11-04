@@ -1,0 +1,31 @@
+body { width: 400px; }
+.tabs { display: flex; gap: 4px; padding: 8px 14px 0; border-bottom: 1px solid var(--line); }
+.tabs button { border: 0; background: none; border-radius: 0; padding: 7px 10px 9px; color: var(--mut); border-bottom: 2px solid transparent; }
+.tabs button.on { color: var(--fg); border-bottom-color: var(--acc); }
+.swatches { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.sw { all: unset; cursor: pointer; border-radius: 9px; overflow: hidden; background: var(--card); display: grid; }
+.sw i { display: block; height: 46px; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .08); }
+.sw b { font: 600 10.5px/1.2 ui-monospace, "SF Mono", monospace; padding: 4px 5px 0; }
+.sw span { font-size: 10px; color: var(--mut); padding: 0 5px 5px; }
+.sw .role { color: var(--acc); font-weight: 700; }
+.vars { display: flex; flex-wrap: wrap; gap: 4px; max-height: 110px; overflow: auto; }
+.var { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; font: 11px ui-monospace, "SF Mono", monospace;
+  padding: 3px 7px 3px 3px; border-radius: 6px; background: var(--card); }
+.var i { width: 14px; height: 14px; border-radius: 4px; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .1); }
+.font { display: grid; gap: 2px; }
+.font .row { gap: 6px; }
+.svggrid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; max-height: 300px; overflow: auto; }
+.svggrid label { position: relative; aspect-ratio: 1; border-radius: 8px; cursor: pointer; display: grid; place-items: center;
+  background: repeating-conic-gradient(#e7e8ec 0 25%, #fff 0 50%) 0 0 / 12px 12px; }
+.svggrid img { max-width: 70%; max-height: 70%; }
+.svggrid input { position: absolute; top: 4px; left: 4px; margin: 0; }
+.svggrid .k { position: absolute; bottom: 3px; right: 4px; font-size: 9px; color: #6b7280; }
+.thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
+.thumbs img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 7px; background: var(--card); }
+.gridform { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.gridform label { justify-content: space-between; }
+.gridform input { width: 74px; }
+.gridform button { grid-column: 1 / -1; }
+.chip input { margin: 0 4px 0 0; vertical-align: -1px; }
+.copied { outline: 2px solid var(--ok); }
+a.mini { font-size: 12px; font-weight: 600; padding: 1px 7px; border-radius: 6px; border: 1px solid var(--line); color: var(--fg); text-decoration: none; }

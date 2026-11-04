@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8"><title>Widget vidéo</title><link rel="stylesheet" href="shared/ui.css"></head>
+<body style="--accent:#ff5a1f">
+  <header><img src="icons/32.png" alt=""><h1>Widget vidéo</h1><span class="grow"></span><button id="folder" class="mini">Web Media</button></header>
+  <main>
+    <div class="card row">
+      <label class="grow"><input type="checkbox" id="enabled"> Boutons au survol des vidéos</label>
+      <button id="site" class="mini"></button>
+    </div>
+    <div class="row"><label>Qualité vidéo
+      <select id="quality"><option value="best">Meilleure</option><option value="2160">4K</option><option value="1080">1080p</option><option value="720">720p</option><option value="480">480p</option></select></label></div>
+    <h2>Performance</h2>
+    <div class="card row">
+      <label>Téléchargements simultanés <select id="par"><option>1</option><option>2</option><option>3</option><option>4</option></select></label>
+      <label><input type="checkbox" id="low"> Priorité basse (le Mac reste fluide)</label>
+    </div>
+    <div class="row"><h2 class="grow">Tous les téléchargements</h2><button id="clear" class="mini">Effacer les terminés</button></div>
+    <div id="jobs" class="jobs"></div>
+  </main>
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"><title>Workspace</title>
+  <link rel="stylesheet" href="shared/ui.css"><link rel="stylesheet" href="popup.css">
+</head>
+<body style="--accent:#b8862b">
+  <header><img src="icons/32.png" alt=""><h1>Workspace</h1><span class="grow"></span><button id="open" class="mini">Tout voir ↗</button><button id="settings" class="mini" title="Réglages : clients, tarifs, prompts, Notion">⚙</button></header>
+  <nav class="tabs">
+    <button data-tab="capture" class="on">Capture</button>
+    <button data-tab="temps">Temps</button>
+    <button data-tab="prompts">Prompts</button>
+  </nav>
+
+  <main id="capture" class="pane">
+    <input id="tTitle" type="text" placeholder="Tâche à faire">
+    <div class="row">
+      <select id="tClient" class="grow" aria-label="Client"></select>
+      <input id="tDue" type="date" aria-label="Échéance">
+    </div>
+    <div class="chips" id="dueChips"></div>
+    <textarea id="tNotes" rows="2" placeholder="Note (facultatif)"></textarea>
+    <label><input type="checkbox" id="tLink" checked> Joindre la page<span id="selInfo" class="mut small"></span></label>
+    <button id="tAdd" class="primary">Ajouter la tâche</button>
+    <div id="tMsg" class="mut small"></div>
+    <h2>À faire</h2>
+    <div id="tList" class="list"></div>
+  </main>
+
+  <main id="temps" class="pane" hidden>
+    <div class="card clock">
+      <div id="clock" class="big">0:00:00</div>
+      <div id="clockFor" class="mut"></div>
+    </div>
+    <div id="startForm" class="grid2">
+      <select id="cClient" aria-label="Client"></select>
+      <input id="cProject" type="text" list="projects" placeholder="Projet (ex. Papeterie 2027)"><datalist id="projects"></datalist>
+      <input id="cNote" type="text" placeholder="Ce que tu fais (facultatif)" class="span2">
+    </div>
+    <button id="cToggle" class="primary">▶ Démarrer</button>
+    <div class="mut small">⌥⇧T démarre ou arrête le chrono partout. Il s'arrête tout seul si le Mac est verrouillé ou inactif 10 min.</div>
+    <h2>Aujourd'hui</h2>
+    <div id="todayList" class="list"></div>
+  </main>
+
+  <main id="prompts" class="pane" hidden>
+    <input id="pSearch" type="search" placeholder="Chercher un prompt…">
+    <div id="pList" class="list"></div>
+    <div id="pForm" class="card" hidden>
+      <div class="title1" id="pTitle"></div>
+      <div id="pVars" class="vars"></div>
+      <div class="row"><button id="pBack" class="mini">← Retour</button><span class="grow"></span><button id="pCopy">Copier</button><button id="pIns" class="primary">Insérer dans la page</button></div>
+    </div>
+    <div class="mut small">« Insérer » écrit dans le champ actif de la page (assistant IA, générateur d'images…). Autre méthode : clic droit dans le champ › Prompt (Aruzen).</div>
+  </main>
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

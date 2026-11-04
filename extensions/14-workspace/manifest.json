@@ -1,0 +1,51 @@
+{
+  "manifest_version": 3,
+  "name": "Aruzen · Workspace",
+  "version": "1.0.0",
+  "description": "Capture rapide de tâches (avec envoi facultatif vers un outil de notes), chronomètre par client avec feuille de temps et export, bibliothèque de prompts à variables.",
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "options_page": "workspace.html",
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "contextMenus",
+    "activeTab",
+    "scripting",
+    "alarms",
+    "idle",
+    "notifications",
+    "downloads"
+  ],
+  "host_permissions": [
+    "https://api.notion.com/*"
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+Shift+W"
+      }
+    },
+    "toggle-timer": {
+      "suggested_key": {
+        "default": "Alt+Shift+T"
+      },
+      "description": "Démarrer / arrêter le chronomètre"
+    }
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA55vSCXMXIUJxa5kDMaThp0A7iCpP1BCuR4S2EwmEIWQ6DF7S7xIwbHm2cJX0EfcHXE1f9k3GxjxCD5lM5qPld9OzQ1xbfEjxjCZ5cAUVJvt4FYkxajiTDAVItzf5DUK/ufH1s3N2OGAR4raQ1TCF/foH8jKJ/fY0RF1zddOhT18Cujv/VFHqHiqxWhPnKYzD4CCWxKKdqPwNZBk2pD/v+vh24tcA4Qpy86b3dSKrq9EA9IyxEAKXBdikKv2tMukxvGbQyoyOFSOCuHmRZMdvV56qR4Uf8L2spMcKkrIALDl5UB+XAcB1ocB1/Q+jo0nNROxEHa3YsTAiiCdFjR5NWQIDAQAB"
+}

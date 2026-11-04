@@ -1,0 +1,24 @@
+# Clés privées des extensions : ne jamais publier
+tools/keys/
+*.pem
+*.crx
+
+# Secrets et environnement
+.env
+.env.*
+*.key
+
+# Dépendances, builds, paquets
+node_modules/
+dist/
+build/
+*.app/
+__pycache__/
+*.pyc
+
+# Fichiers système et éditeurs
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp

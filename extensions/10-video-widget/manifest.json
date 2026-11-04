@@ -1,0 +1,40 @@
+{
+  "manifest_version": 3,
+  "name": "Aruzen · Widget vidéo",
+  "version": "1.0.0",
+  "description": "Ajoute des boutons « Vidéo » et « MP3 » au survol de chaque vidéo (plateformes vidéo, réseaux sociaux, sites intégrés…) et regroupe tous les téléchargements.",
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "nativeMessaging",
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1zwhi/HtZBhtjtALEXBQhxGjFQcmijxwUgzrzlu8QRF5X/ebdvbnd1l6X/U5NMnigFx/w5lVuGRTSJ99uOm4qV5JWTtrIEpBDCRhShGx5jLz1qTddXeXJNi5+qKymNbyjr9pyHpoqogUg4poFZNnxg/LApifIhWFUrA04hIKv9TomJiAurgmAjFi08H7PSkEnNZgc3pIw17VRxa9Kmyw+p3NGEGY+eeBPy5fNnD65OXZdo7Pb695vnHpz3xKdzPaELg0pXeZwxcS0e8IcrpwJLU+o40HuAU4j7PT8W3ynFnP9zcr1CYKHR/DGs95QLcpsbKlJqJ+61c5Ht2X+Y/uMwIDAQAB"
+}

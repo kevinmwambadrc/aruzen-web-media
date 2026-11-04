@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "Aruzen · PDF Studio",
+  "version": "1.0.0",
+  "description": "Enregistre n'importe quelle page en PDF propre (A4, portrait ou paysage) et télécharge tous les PDF liés sur une page.",
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "debugger",
+    "downloads",
+    "scripting",
+    "activeTab",
+    "storage",
+    "offscreen"
+  ],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA8MUVcrWDoD+k/ZcAt962wn+8cPkAxgCvRXzqJtTLz9+5rKlj7u96p2Ku11Gv78mffX9E+w6I/2B9DCaM2c3mNVHUeSRRpqrr1XsAteCmky9qCiTs84gTH9xb7iYeoj0q3yDTLEo7kVfi0W3aIkvBm8o7eCD/aHrR1ZS/+23TYF1rhVs2FY0MdmQfO8e5eHKgaHX/ffFG5xSB29IgKi9uloQHLUlKI9X99wpWqbqr45SSHojcXL+/6Of9WeckXkUb+RS7Zphfos8Om5XT2GUgGNdXz7BPWO4jnlxqF9Xvr1wvccynaFG0xQkMWXUd1OmydjCqNa+taQkLPHW9k034owIDAQAB"
+}

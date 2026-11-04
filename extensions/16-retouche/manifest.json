@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "Aruzen · Retouche",
+  "version": "1.0.0",
+  "description": "Gomme intelligente : peins une zone (filigrane, date, logo, objet, défaut) et l'image se reconstitue d'après son contenu, en local. Pour tes images et celles dont tu as les droits.",
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "action": {
+    "default_title": "Ouvrir l'atelier Retouche",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "downloads",
+    "contextMenus",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmZD2NKLM0EnFx0bGVU6Kn7Rlytc9Cv+jp3QzhFA37/wECqa3dkLujIQInjZeTABo2yQ7rtvF1OsdIlqlwPPOelFcRQVZ2iYHB91VRrmnHYqI8NbIA1joyTg6t3wDDi2Rbba4HW4zearyxnrpnSpy9AUoZ/ypZpBy7HgnY9GWUK6bj68F3o/qx9WW8VACCosFw96nIK9ebe7rGAViFVoDgCrtEg+89VbyuX9SnngQqXCYfMvTbvg7L3HqVD/FHkZgCSQS86qdIdLSjjEdRL4hlvlB31fqS18JAIo2jTLvJhNFCOrQRGBR0ZBQ2huwJDTtPnLo7m5FrNtI9xutx0OqEQIDAQAB"
+}

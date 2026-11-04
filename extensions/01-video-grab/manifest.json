@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "Aruzen · Vidéo Grab",
+  "version": "1.0.0",
+  "description": "Télécharge la vidéo de n'importe quelle page (plateformes vidéo, réseaux sociaux, sites intégrés) en MP4, qualité au choix.",
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "nativeMessaging",
+    "contextMenus",
+    "storage",
+    "activeTab"
+  ],
+  "commands": {
+    "download-video": {
+      "suggested_key": {
+        "default": "Alt+Shift+V"
+      },
+      "description": "Télécharger la vidéo de l'onglet"
+    }
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwY8kBA2Rl8BF70SZGmcE7E+1uSaeg+O5kzPqH7l3GFOqmXKUsYscDh8Cycb/1jbBxfvtR7CbC+1d230FtsytA9LlwiAiGmcP4xPNLm35sXBvIY9zpzzUkVRR8LoeEdlPcJSe3VruyKF8SimVK29frHi8GZ0+k03RGb832bWzGebdIiWCh9kHc33G2IGhr3i+1CdRffDxGMgQB4/ugcxrBD33RlrwGvIQzgGK3bxTnGWKY4iuzZ+PsNcZBmkJt/2beC2/pPiyIrOe2ioqHR99fOV/74DEOjEb5nD0cSSmdMl0LgaxfxPYWj3eCUpecApwaryth+lXnMUjPnXv6gqq0QIDAQAB"
+}

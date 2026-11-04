@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Moodboard · Aruzen</title>
+  <link rel="icon" href="icons/32.png">
+  <link rel="stylesheet" href="board.css">
+</head>
+<body>
+  <header>
+    <img src="icons/48.png" alt="">
+    <select id="board" aria-label="Tableau"></select>
+    <button id="rename" class="ghost">Renommer</button>
+    <button id="new" class="ghost">＋ Nouveau tableau</button>
+    <span class="grow"></span>
+    <span id="count" class="mut"></span>
+    <button id="files" class="ghost">Télécharger les images</button>
+    <button id="pdf" class="primary">Exporter en PDF</button>
+    <button id="del" class="ghost danger" title="Supprimer ce tableau">Supprimer</button>
+  </header>
+  <h1 id="title"></h1>
+  <div id="drop" class="hint">Glisse des images ici, colle-les (⌘V) ou fais un clic droit sur une image du web › « Ajouter au moodboard ».</div>
+  <main id="wall"></main>
+  <script type="module" src="board.js"></script>
+</body>
+</html>

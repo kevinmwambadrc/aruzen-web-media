@@ -1,0 +1,19 @@
+body { width: 390px; }
+.tabs { display: flex; gap: 4px; padding: 8px 14px 0; border-bottom: 1px solid var(--line); }
+.tabs button { border: 0; background: none; border-radius: 0; padding: 7px 10px 9px; color: var(--mut); border-bottom: 2px solid transparent; }
+.tabs button.on { color: var(--fg); border-bottom-color: var(--acc); }
+textarea { font: inherit; padding: 6px 8px; border: 1px solid var(--line); border-radius: 7px; background: var(--bg); color: var(--fg); resize: vertical; }
+input[type=date], input[type=search] { font: inherit; padding: 5px 8px; border: 1px solid var(--line); border-radius: 7px; background: var(--bg); color: var(--fg); }
+.task { align-items: flex-start; }
+.task input { margin-top: 3px; }
+.task .meta { font-size: 11px; color: var(--mut); }
+.task .late { color: var(--err); font-weight: 600; }
+.clock { text-align: center; }
+.big { font: 600 34px/1.1 ui-monospace, "SF Mono", monospace; letter-spacing: .02em; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.span2 { grid-column: 1 / -1; }
+.vars { display: grid; gap: 6px; margin: 8px 0; }
+.vars label { display: grid; gap: 3px; font-size: 11px; }
+.vars textarea { min-height: 34px; }
+.pr { cursor: pointer; }
+.pr .cat { font-size: 10px; font-weight: 700; color: var(--acc); text-transform: uppercase; }

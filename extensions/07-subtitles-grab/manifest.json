@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Aruzen · Sous-titres & Miniatures",
+  "version": "1.0.0",
+  "description": "Télécharge les sous-titres (SRT, toutes langues, y compris automatiques) et la miniature HD d'une vidéo.",
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png"
+    }
+  },
+  "permissions": [
+    "nativeMessaging",
+    "activeTab",
+    "storage"
+  ],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApywSG9jI1MYbD6KSGyKsxbceNoSgvSkZvPRI0bmG7FKon3TKCoSiIZVcpHklRCbTS4mspRQ8WwYD/pw4K7FMb5x5KYclc+k8rxVB7Ae6GlSiUi6qt0luc7F1WXFQ0unlVTPSAtptdEm0ZZUYTFQdYJr3RV+L+mgG09+3mZkvJNYSR0amSPazL0aOaqX4O51EKF5vYxVhGn4IljGmNwMtAWCVTLUZ2wG+5aZ34GaWMKWQukxX60JCftwz2+77b0UOtbdGpq3LGl0qPCjytpeTngTDs1Zsy2NJIoRZymGTiP+a0tUIDdCOAXXXAo/jc1zZvqg2Mjc44JcBBL7/b/f06wIDAQAB"
+}
