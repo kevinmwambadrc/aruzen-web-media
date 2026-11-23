@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Aruzen · Playlist Grab",
-  "version": "1.0.0",
-  "description": "Télécharge une playlist, un album ou une chaîne entière (vidéo ou audio), avec choix des éléments.",
+  "version": "2.0.0",
+  "description": "Télécharge des playlists, albums et chaînes entières au format de ton choix (MP4, WEBM, MKV, MOV, AVI, GIF ou audio), en cochant les éléments voulus.",
   "icons": {
     "16": "icons/16.png",
     "48": "icons/48.png",

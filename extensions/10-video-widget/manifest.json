@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Aruzen · Widget vidéo",
-  "version": "1.0.0",
-  "description": "Ajoute des boutons « Vidéo » et « MP3 » au survol de chaque vidéo (plateformes vidéo, réseaux sociaux, sites intégrés…) et regroupe tous les téléchargements.",
+  "version": "2.0.0",
+  "description": "Ajoute des boutons de téléchargement au survol de chaque vidéo (plateformes vidéo, réseaux sociaux, sites intégrés…) avec le choix du format (MP4, WEBM, MKV, MOV, AVI, GIF, MP3, M4A, FLAC, WAV…) et regroupe tous les téléchargements.",
   "icons": {
     "16": "icons/16.png",
     "48": "icons/48.png",

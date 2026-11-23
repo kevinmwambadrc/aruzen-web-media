@@ -2,7 +2,15 @@
 
 # Media Sniffer
 
-**Repère les fichiers vidéo et audio réellement chargés par la page (MP4, MP3, HLS, DASH).** · version 1.0.0 · catégorie : Vidéo & audio
+**Repère les fichiers vidéo et audio réellement chargés par la page (MP4, MP3, HLS, DASH).** · version 2.0.0 · catégorie : Vidéo & audio
+
+## Nouveau dans la 2.0
+
+- Filtre par type : vidéo, audio ou flux
+- Flux HLS/DASH reconstitués en MP4, MKV, WEBM, MOV, MP3 ou M4A
+- « Tout télécharger » et « Copier les liens »
+- Bouton ↻ pour relancer un téléchargement en erreur, messages d'erreur clairs
+- Chaque tâche travaille dans son propre dossier : deux téléchargements de la même vidéo ne s'écrasent plus (« nom (2) »)
 
 ## Fonctionnalités
 

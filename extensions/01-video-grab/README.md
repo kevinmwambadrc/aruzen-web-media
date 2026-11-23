@@ -2,7 +2,17 @@
 
 # Vidéo Grab
 
-**Télécharge la vidéo de la page en MP4, qualité au choix.** · version 1.0.0 · catégorie : Vidéo & audio
+**Télécharge la vidéo de la page en MP4, qualité au choix.** · version 2.0.0 · catégorie : Vidéo & audio
+
+## Nouveau dans la 2.0
+
+- Choix du format : MP4, WEBM, MKV, MOV, AVI, GIF animé ou audio seul (MP3, M4A, AAC, OPUS, FLAC, WAV)
+- Taille estimée pour chaque qualité, jusqu'à la 4K ; codec compatible (H.264) ou meilleure qualité (AV1/VP9)
+- Extrait : seulement un passage, début et fin (⏱ reprend la position de lecture)
+- Sous-titres intégrés à la vidéo
+- Clic droit › « Télécharger en… » pour choisir le format sans ouvrir la fenêtre
+- Bouton ↻ pour relancer un téléchargement en erreur, messages d'erreur clairs
+- Chaque tâche travaille dans son propre dossier : deux téléchargements de la même vidéo ne s'écrasent plus (« nom (2) »)
 
 ## Fonctionnalités
 
@@ -33,6 +43,7 @@ Raccourcis : ⌥⇧V : Télécharger la vidéo de l'onglet
 | `contextMenus` | Ajoute ses entrées au clic droit. |
 | `storage` | Garde tes réglages et ton historique dans le stockage local du navigateur. |
 | `activeTab` | Accède à l'onglet actif seulement quand tu cliques sur l'icône, un raccourci ou le menu. |
+| `scripting` | Lit la position de lecture de la vidéo de l'onglet actif pour fixer le début ou la fin d'un extrait (bouton ⏱). |
 
 ## Confidentialité
 

@@ -2,7 +2,15 @@
 
 # Widget vidéo
 
-**Ajoute des boutons « Vidéo » et « MP3 » au survol de chaque vidéo.** · version 1.0.0 · catégorie : Vidéo & audio
+**Ajoute des boutons « Vidéo » et « MP3 » au survol de chaque vidéo.** · version 2.0.0 · catégorie : Vidéo & audio
+
+## Nouveau dans la 2.0
+
+- Menu ▾ au survol des vidéos avec tous les formats vidéo et audio
+- Format par défaut des boutons ⬇ et ♪ réglable
+- Comptes connectés (désactivé par défaut) : contenus réservés aux abonnés via ta session d'un navigateur de ce Mac
+- Bouton ↻ pour relancer un téléchargement en erreur, messages d'erreur clairs
+- Chaque tâche travaille dans son propre dossier : deux téléchargements de la même vidéo ne s'écrasent plus (« nom (2) »)
 
 ## Fonctionnalités
 

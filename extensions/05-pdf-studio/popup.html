@@ -7,11 +7,20 @@
     <div class="card">
       <div class="title" id="ptitle"></div>
       <div class="row" style="margin-top:8px">
+        <label>Enregistrer en <select id="out"><option value="pdf">PDF</option><option value="png">PNG (page entière)</option><option value="jpeg">JPG (page entière)</option><option value="webp">WEBP (page entière)</option></select></label>
+      </div>
+      <div class="row pdfonly" style="margin-top:8px">
+        <label>Papier <select id="paper"><option value="A4">A4</option><option value="A3">A3</option><option value="A5">A5</option><option value="Letter">Lettre US</option><option value="Legal">Légal US</option></select></label>
+        <label>Échelle <select id="scale"><option value="1">100 %</option><option value="0.9">90 %</option><option value="0.8">80 %</option><option value="0.7">70 %</option><option value="0.6">60 %</option></select></label>
+        <label>Pages <input id="pages" type="text" placeholder="toutes, ex. 1-3,5" style="width:110px"></label>
+      </div>
+      <div class="row pdfonly" style="margin-top:8px">
         <label><input type="checkbox" id="landscape"> Paysage</label>
         <label><input type="checkbox" id="background" checked> Couleurs de fond</label>
         <label><input type="checkbox" id="margins" checked> Marges</label>
+        <label><input type="checkbox" id="header"> En-tête et n° de page</label>
       </div>
-      <div class="row" style="margin-top:8px"><button id="print" class="primary grow">Enregistrer la page en PDF</button></div>
+      <div class="row" style="margin-top:8px"><button id="print" class="primary grow">Enregistrer la page</button></div>
       <div id="pmsg" class="mut small"></div>
     </div>
     <div id="thispdf"></div>

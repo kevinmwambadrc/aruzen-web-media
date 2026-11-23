@@ -6,8 +6,8 @@ chrome.runtime.onInstalled.addListener(() => {
 
 async function download(url) {
   if (!url) return;
-  const { audio_format = "mp3" } = await remember(["audio_format"]);
-  enqueue({ kind: "audio", url, audio_format });
+  const { audio_format = "mp3", audio_quality = "0" } = await remember(["audio_format", "audio_quality"]);
+  enqueue({ kind: "audio", url, audio_format, audio_quality });
 }
 
 chrome.contextMenus.onClicked.addListener((info, tab) => download(pickUrl(info, tab)));

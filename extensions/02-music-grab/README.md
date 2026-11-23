@@ -2,7 +2,16 @@
 
 # Music Grab
 
-**Extrait l'audio d'une page en MP3, M4A, Opus, FLAC ou WAV, avec pochette et tags.** · version 1.0.0 · catégorie : Vidéo & audio
+**Extrait l'audio d'une page en MP3, M4A, Opus, FLAC ou WAV, avec pochette et tags.** · version 2.0.0 · catégorie : Vidéo & audio
+
+## Nouveau dans la 2.0
+
+- Nouveau format AAC, en plus de MP3, M4A, OPUS, FLAC et WAV
+- Débit au choix : meilleur, 320, 192 ou 128 kb/s
+- Extrait : seulement un passage
+- Pochette intégrée aussi en FLAC et OPUS
+- Bouton ↻ pour relancer un téléchargement en erreur, messages d'erreur clairs
+- Chaque tâche travaille dans son propre dossier : deux téléchargements de la même vidéo ne s'écrasent plus (« nom (2) »)
 
 ## Fonctionnalités
 
@@ -32,6 +41,7 @@ Raccourcis : ⌥⇧M : Télécharger la musique de l'onglet
 | `contextMenus` | Ajoute ses entrées au clic droit. |
 | `storage` | Garde tes réglages et ton historique dans le stockage local du navigateur. |
 | `activeTab` | Accède à l'onglet actif seulement quand tu cliques sur l'icône, un raccourci ou le menu. |
+| `scripting` | Lit la position de lecture de l'onglet actif pour fixer le début ou la fin d'un extrait (bouton ⏱). |
 
 ## Confidentialité
 

@@ -7,7 +7,10 @@
     <div id="cats" class="chips"></div>
     <input id="filter" type="text" placeholder="Filtrer (nom, extension, mot du lien)…">
     <div id="list" class="list"></div>
-    <div class="row"><label><input type="checkbox" id="all"> Tout cocher</label><span class="grow"></span><button id="dl" class="primary">Télécharger</button></div>
+    <div class="row"><label><input type="checkbox" id="all"> Tout cocher</label><span class="grow"></span>
+      <button id="copy" class="mini" title="Copier les liens cochés">⧉ Copier</button>
+      <select id="exp" title="Exporter la liste"><option value="">Exporter…</option><option value="txt">Liste .txt</option><option value="csv">Tableau .csv</option><option value="md">Markdown .md</option></select></div>
+    <div class="row"><label class="grow">Sous-dossier <input id="sub" type="text" class="grow" placeholder="nom du site"></label><button id="dl" class="primary">Télécharger</button></div>
     <div class="mut small">3 fichiers à la fois, rangés dans Téléchargements › Web Media › Fichiers.</div>
   </main>
   <script type="module" src="popup.js"></script>

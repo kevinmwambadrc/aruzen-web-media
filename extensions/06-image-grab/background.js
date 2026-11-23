@@ -1,4 +1,5 @@
 import { queueDownloads, nameFromUrl, hostOf } from "./shared/dlqueue.js";
+import { downloadConverted } from "./shared/convert.js";
 
 chrome.runtime.onMessage.addListener((m, _s, reply) => {
   if (m.cmd !== "images") return;
@@ -11,6 +12,10 @@ chrome.runtime.onMessage.addListener((m, _s, reply) => {
     }
     return { url: u, filename: dir + name };
   });
-  queueDownloads(items).then(() => reply({ ok: true }));
+  if (m.fmt) {
+    downloadConverted(items, m.fmt, m.quality).then((converted) => reply({ ok: true, converted }));
+  } else {
+    queueDownloads(items).then(() => reply({ ok: true }));
+  }
   return true;
 });

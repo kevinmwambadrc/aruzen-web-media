@@ -2,7 +2,13 @@
 
 # PDF Studio
 
-**Enregistre une page en PDF A4 propre et récupère tous les PDF liés.** · version 1.0.0 · catégorie : Images & documents
+**Enregistre une page en PDF A4 propre et récupère tous les PDF liés.** · version 2.0.0 · catégorie : Images & documents
+
+## Nouveau dans la 2.0
+
+- PDF, ou image PNG / JPG / WEBP de la page entière
+- Papier A4, A3, A5, Lettre ou Légal, échelle et pages à imprimer
+- En-tête (titre, date) et numéros de page en option
 
 ## Fonctionnalités
 

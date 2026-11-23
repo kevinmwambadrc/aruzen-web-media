@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Aruzen · Enregistreur d'onglet",
-  "version": "1.0.0",
-  "description": "Enregistre la vidéo et le son d'un onglet (lives, cours, réunions web) en MP4, encodage matériel peu gourmand.",
+  "version": "2.0.0",
+  "description": "Enregistre l'onglet (image + son) en MP4 ou WEBM, jusqu'à la 4K / 60 i/s, avec pause et reprise.",
   "icons": {
     "16": "icons/16.png",
     "48": "icons/48.png",

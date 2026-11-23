@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Aruzen · Workspace",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Capture rapide de tâches (avec envoi facultatif vers un outil de notes), chronomètre par client avec feuille de temps et export, bibliothèque de prompts à variables.",
   "icons": {
     "16": "icons/16.png",

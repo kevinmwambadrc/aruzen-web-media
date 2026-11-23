@@ -1,4 +1,4 @@
-import { native, activeTab, $, isWebUrl, remember, persist } from "./shared/lib.js";
+import { native, activeTab, $, isWebUrl, remember, persist, formatPicker, AUDIO_QUALITIES, whatsNew } from "./shared/lib.js";
 import { mountJobs } from "./shared/jobs.js";
 
 const jobs = mountJobs($("#jobs"), { limit: 8 });
@@ -20,15 +20,32 @@ $("#site").onclick = async () => {
 };
 siteLabel();
 
-const { quality = "best" } = await remember(["quality"]);
+whatsNew([
+  "Menu ▾ au survol des vidéos : MP4, WEBM, MKV, MOV, AVI, GIF, MP3, M4A, OPUS, FLAC, WAV",
+  "Format par défaut des boutons ⬇ et ♪ réglable ici",
+  "Qualité 1440p / 360p, codec et débit audio au choix ; bouton ↻ pour relancer un échec",
+  "Comptes connectés : stories et vidéos privées via ta session Edge, Chrome, Safari…",
+]);
+
+const { quality = "best", vcodec = "compat", audio_quality = "0" } = await remember(["quality", "vcodec", "audio_quality"]);
 $("#quality").value = quality;
+$("#vcodec").value = vcodec;
+$("#aq").innerHTML = AUDIO_QUALITIES.map((q) => `<option value="${q.v}">${q.l}</option>`).join("");
+$("#aq").value = audio_quality;
 $("#quality").onchange = () => persist({ quality: $("#quality").value });
+$("#vcodec").onchange = () => persist({ vcodec: $("#vcodec").value });
+$("#aq").onchange = () => persist({ audio_quality: $("#aq").value });
+const fm = await chrome.storage.sync.get({ wfmt: "mp4", wafmt: "mp3" });
+formatPicker($("#vfmt"), { audio: false, value: fm.wfmt, onChange: (v) => chrome.storage.sync.set({ wfmt: v }) });
+formatPicker($("#afmt"), { video: false, value: fm.wafmt, onChange: (v) => chrome.storage.sync.set({ wafmt: v }) });
 
 const st = await native({ action: "settings" });
 if (st.ok) {
   $("#par").value = String(st.settings.max_parallel);
   $("#low").checked = st.settings.low_priority;
+  $("#cookies").value = st.settings.cookies_browser || "";
 }
+$("#cookies").onchange = () => native({ action: "settings", set: { cookies_browser: $("#cookies").value } });
 $("#par").onchange = () => native({ action: "settings", set: { max_parallel: Number($("#par").value) } });
 $("#low").onchange = () => native({ action: "settings", set: { low_priority: $("#low").checked } });
 

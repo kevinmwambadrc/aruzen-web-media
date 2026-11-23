@@ -1,4 +1,10 @@
-import { activeTab, $, esc, isWebUrl } from "./shared/lib.js";
+import { activeTab, $, esc, isWebUrl, whatsNew } from "./shared/lib.js";
+
+whatsNew([
+  "Export de la liste au format TXT, CSV ou Markdown",
+  "Copie des liens cochés et sous-dossier de rangement au choix",
+  "Nouvelles catégories : Code et Design (fig, sketch, xd, indd…)",
+]);
 
 const CATS = {
   Documents: "pdf|docx?|xlsx?|pptx?|odt|ods|odp|rtf|txt|csv|epub|pages|numbers|key",
@@ -8,6 +14,8 @@ const CATS = {
   Images: "jpe?g|png|gif|webp|svg|psd|ai|eps|tiff?|heic",
   Apps: "dmg|pkg|exe|msi|apk|ipa|iso",
   Polices: "ttf|otf|woff2?",
+  Design: "fig|sketch|xd|indd|idml|afdesign|afphoto|blend|c4d|glb|gltf|obj|fbx|stl",
+  Code: "json|xml|ya?ml|sql|js|css|py|ipynb|md",
 };
 const ALL = new RegExp("\\.(" + Object.values(CATS).join("|") + ")(\\?|#|$)", "i");
 const catOf = (u) => Object.keys(CATS).find((c) => new RegExp("\\.(" + CATS[c] + ")(\\?|#|$)", "i").test(u));
@@ -45,10 +53,31 @@ function render() {
 $("#cats").onclick = (e) => { const b = e.target.closest(".chip"); if (b) { cat = b.dataset.c; renderCats(); render(); } };
 $("#filter").oninput = render;
 $("#all").onchange = () => document.querySelectorAll("#list input").forEach((c) => (c.checked = $("#all").checked));
+const picked = () => [...document.querySelectorAll("#list input:checked")].map((c) => links[c.dataset.i]);
+const nameOf = (u) => decodeURIComponent(u.split(/[?#]/)[0].split("/").pop());
+$("#copy").onclick = async () => {
+  const l = picked();
+  if (!l.length) return;
+  await navigator.clipboard.writeText(l.map((x) => x.url).join("\n"));
+  $("#copy").textContent = "Copié ✓";
+};
+$("#exp").onchange = () => {
+  const fmt = $("#exp").value;
+  $("#exp").value = "";
+  const l = picked().length ? picked() : links;
+  if (!fmt || !l.length) return;
+  const q = (v) => '"' + String(v).replace(/"/g, '""') + '"';
+  const text = fmt === "txt" ? l.map((x) => x.url).join("\n")
+    : fmt === "csv" ? "\ufeffNom;Type;Texte du lien;Adresse\n" + l.map((x) => [nameOf(x.url), x.cat, x.text, x.url].map(q).join(";")).join("\n")
+    : `# Fichiers de ${tab.title}\n\n` + l.map((x) => `- [${nameOf(x.url).replace(/[[\]]/g, "")}](${x.url}) — ${x.cat}`).join("\n");
+  const url = "data:text/plain;charset=utf-8," + encodeURIComponent(text);
+  const site = new URL(tab.url).hostname.replace(/^www\./, "");
+  chrome.downloads.download({ url, filename: `Web Media/Fichiers/Liens ${site}.${fmt}`, conflictAction: "uniquify" });
+};
 $("#dl").onclick = async () => {
-  const urls = [...document.querySelectorAll("#list input:checked")].map((c) => links[c.dataset.i].url);
+  const urls = picked().map((x) => x.url);
   if (!urls.length) return;
-  await chrome.runtime.sendMessage({ cmd: "links", urls, pageUrl: tab.url });
+  await chrome.runtime.sendMessage({ cmd: "links", urls, pageUrl: tab.url, folder: $("#sub").value.trim() });
   $("#dl").textContent = `${urls.length} en file ✓`;
 };
 renderCats();

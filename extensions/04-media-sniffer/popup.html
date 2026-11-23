@@ -5,7 +5,15 @@
   <header><img src="icons/32.png" alt=""><h1>Media Sniffer</h1><span class="grow"></span><button id="folder" class="mini">Dossier</button></header>
   <main>
     <div class="mut">Médias détectés pendant la lecture. Lance la vidéo ou la musique si la liste est vide.</div>
+    <div id="cats" class="chips"></div>
     <div id="list" class="list"></div>
+    <div class="row">
+      <label>Flux HLS/DASH en <select id="sfmt"><option value="mp4">MP4</option><option value="mkv">MKV</option><option value="webm">WEBM</option><option value="mov">MOV</option><option value="mp3">MP3 (audio)</option><option value="m4a">M4A (audio)</option></select></label>
+    </div>
+    <div class="row">
+      <button id="dlAll" class="primary grow">Tout télécharger</button>
+      <button id="copyAll" title="Copier tous les liens visibles">Copier les liens</button>
+    </div>
     <div class="row"><button id="page" class="grow">Analyser la page avec yt-dlp</button></div>
     <h2>Flux en cours</h2>
     <div id="jobs" class="jobs"></div>

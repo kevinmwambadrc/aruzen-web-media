@@ -10,15 +10,15 @@ async function ensureOffscreen() {
 async function setState(state) {
   await chrome.storage.session.set({ rec: state });
   await chrome.action.setBadgeBackgroundColor({ color: "#dc2626" });
-  await chrome.action.setBadgeText({ text: state ? "REC" : "" });
+  await chrome.action.setBadgeText({ text: state ? (state.paused ? "❚❚" : "REC") : "" });
 }
 
-async function start({ tabId, title, audio, bitrate }) {
+async function start({ tabId, title, audio, bitrate, fmt, width, fps }) {
   const { rec } = await chrome.storage.session.get("rec");
   if (rec) return { ok: false, error: "Un enregistrement est déjà en cours" };
   const streamId = await chrome.tabCapture.getMediaStreamId({ targetTabId: tabId });
   await ensureOffscreen();
-  const r = await chrome.runtime.sendMessage({ target: "offscreen", cmd: "start", streamId, audio, bitrate });
+  const r = await chrome.runtime.sendMessage({ target: "offscreen", cmd: "start", streamId, audio, bitrate, fmt, width, fps });
   if (!r?.ok) return r || { ok: false, error: "Démarrage impossible" };
   await setState({ tabId, title, started: Date.now(), mime: r.mime });
   return { ok: true };
@@ -47,4 +47,18 @@ chrome.runtime.onMessage.addListener((m, _s, reply) => {
   if (m.cmd === "start") { start(m).then(reply, (e) => reply({ ok: false, error: e.message })); return true; }
   if (m.cmd === "stop") { chrome.runtime.sendMessage({ target: "offscreen", cmd: "stop" }).then(reply, () => { setState(null); reply({ ok: true }); }); return true; }
   if (m.cmd === "saved") { save(m.url, m.ext); }
+  if (m.cmd === "pause") {
+    (async () => {
+      const { rec } = await chrome.storage.session.get("rec");
+      if (!rec) return reply({ ok: false });
+      const r = await chrome.runtime.sendMessage({ target: "offscreen", cmd: rec.paused ? "resume" : "pause" });
+      if (r?.ok) {
+        if (rec.paused) { rec.pausedTotal = (rec.pausedTotal || 0) + Date.now() - rec.paused; rec.paused = 0; }
+        else rec.paused = Date.now();
+        await setState(rec);
+      }
+      reply(r);
+    })();
+    return true;
+  }
 });

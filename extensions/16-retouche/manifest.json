@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Aruzen · Retouche",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Gomme intelligente : peins une zone (filigrane, date, logo, objet, défaut) et l'image se reconstitue d'après son contenu, en local. Pour tes images et celles dont tu as les droits.",
   "icons": {
     "16": "icons/16.png",

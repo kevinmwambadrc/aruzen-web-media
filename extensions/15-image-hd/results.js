@@ -119,8 +119,10 @@ function render() {
   $("#dl").textContent = n ? `Télécharger ${n} image(s) HD` : "Télécharger";
 }
 
+chrome.storage.local.get("hd_fmt").then(({ hd_fmt }) => { if (hd_fmt) $("#fmt").value = hd_fmt; });
+$("#fmt").onchange = () => chrome.storage.local.set({ hd_fmt: $("#fmt").value });
 const download = async (list) => {
-  await chrome.runtime.sendMessage({ cmd: "download", pageUrl: page, urls: list.map((it) => (it.best || it.base || { url: it.shown }).url) });
+  await chrome.runtime.sendMessage({ cmd: "download", pageUrl: page, fmt: $("#fmt").value, urls: list.map((it) => (it.best || it.base || { url: it.shown }).url) });
 };
 $("#grid").onclick = async (e) => {
   const act = e.target.closest("[data-act]")?.dataset.act, card = e.target.closest(".card");

@@ -8,8 +8,15 @@
     <h2>Sous-titres disponibles</h2>
     <div id="langs" class="chips"><span class="mut">…</span></div>
     <div class="row">
-      <button id="subs" class="primary grow">Télécharger les sous-titres (.srt)</button>
-      <button id="thumb">Miniature HD</button>
+      <label>Format <select id="sfmt">
+        <option value="srt">SRT (lecteurs, montage)</option><option value="vtt">VTT (web)</option>
+        <option value="ass">ASS (stylés)</option><option value="lrc">LRC (paroles)</option><option value="txt">TXT (transcription)</option>
+      </select></label>
+      <button id="subs" class="primary grow">Télécharger</button>
+    </div>
+    <div class="row">
+      <label>Miniature en <select id="tfmt"><option value="jpg">JPG</option><option value="png">PNG</option><option value="webp">WEBP</option></select></label>
+      <button id="thumb" class="grow">Miniature HD</button>
     </div>
     <h2>Téléchargements</h2>
     <div id="jobs" class="jobs"></div>

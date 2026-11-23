@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Aruzen · Liens en masse",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Liste tous les fichiers liés d'une page (documents, archives, audio, vidéo, apps…), filtre et télécharge la sélection.",
   "icons": {
     "16": "icons/16.png",

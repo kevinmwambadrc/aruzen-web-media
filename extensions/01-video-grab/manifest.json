@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Aruzen · Vidéo Grab",
-  "version": "1.0.0",
-  "description": "Télécharge la vidéo de n'importe quelle page (plateformes vidéo, réseaux sociaux, sites intégrés) en MP4, qualité au choix.",
+  "version": "2.0.0",
+  "description": "Télécharge la vidéo de n'importe quelle page (plateformes vidéo, réseaux sociaux, sites intégrés) au format de ton choix : MP4, WEBM, MKV, MOV, AVI, GIF ou audio seul, en entier ou en extrait.",
   "icons": {
     "16": "icons/16.png",
     "48": "icons/48.png",
@@ -23,7 +23,8 @@
     "nativeMessaging",
     "contextMenus",
     "storage",
-    "activeTab"
+    "activeTab",
+    "scripting"
   ],
   "commands": {
     "download-video": {

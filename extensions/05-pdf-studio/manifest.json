@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Aruzen · PDF Studio",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Enregistre n'importe quelle page en PDF propre (A4, portrait ou paysage) et télécharge tous les PDF liés sur une page.",
   "icons": {
     "16": "icons/16.png",

@@ -6,15 +6,24 @@ const LABEL = { queued: "En attente", starting: "Démarrage", running: "En cours
 const ICON = { video: "🎬", audio: "🎵", playlist: "📃", subs: "💬", thumb: "🖼", file: "📦" };
 const ACTIVE = ["queued", "starting", "running"];
 
+function fmtTag(j) {
+  const f = j.kind === "audio" || (j.kind === "playlist" && j.media === "audio") ? j.audio_format
+    : j.kind === "video" || j.kind === "playlist" ? j.container
+    : j.kind === "subs" ? j.sub_format : j.kind === "thumb" ? j.thumb_format : "";
+  const clip = j.start || j.end ? " ✂" : "";
+  return f ? `<span class="fmt">${esc(String(f).toUpperCase())}${clip}</span>` : "";
+}
+
 function row(j) {
   const active = ACTIVE.includes(j.status);
   const detail = j.status === "error" ? `<span class="err">${esc(j.error)}</span>`
     : j.status === "running" ? [Math.round(j.percent) + " %", j.item, j.speed, j.eta && "reste " + j.eta].filter(Boolean).map(esc).join(" · ")
     : LABEL[j.status] || j.status;
   return `<div class="job ${j.status}">
-    <div class="row"><span>${ICON[j.kind] || "⬇"}</span><span class="grow title1">${esc(j.title)}</span>
+    <div class="row"><span>${ICON[j.kind] || "⬇"}</span><span class="grow title1">${esc(j.title)}</span>${fmtTag(j)}
       ${active ? `<button class="mini" data-act="cancel" data-id="${esc(j.id)}" title="Annuler">✕</button>`
-               : j.status === "done" ? `<button class="mini" data-act="reveal" data-id="${esc(j.id)}" title="Afficher dans le Finder">↗</button>` : ""}
+               : j.status === "done" ? `<button class="mini" data-act="reveal" data-id="${esc(j.id)}" title="Afficher dans le Finder">↗</button>`
+               : `<button class="mini" data-act="retry" data-id="${esc(j.id)}" title="Relancer">↻</button>`}
     </div>
     ${active ? `<div class="bar"><i style="width:${Math.max(2, j.percent || 0)}%"></i></div>` : ""}
     <div class="mut small">${detail}</div></div>`;

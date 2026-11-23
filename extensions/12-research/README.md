@@ -2,7 +2,11 @@
 
 # Research
 
-**Surligneur et carnet de citations, sessions d'onglets, libération de mémoire et veille de pages.** · version 1.0.0 · catégorie : Création & productivité
+**Surligneur et carnet de citations, sessions d'onglets, libération de mémoire et veille de pages.** · version 2.0.0 · catégorie : Création & productivité
+
+## Nouveau dans la 2.0
+
+- Export du carnet en Markdown, HTML, TXT, CSV ou JSON
 
 ## Fonctionnalités
 

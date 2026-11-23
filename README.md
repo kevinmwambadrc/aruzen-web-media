@@ -10,8 +10,21 @@ Aruzen Web Media réunit des outils du quotidien pour les créatifs, chercheurs 
 - **Léger** : 2 téléchargements simultanés au maximum, priorité basse, encodage matériel.
 - **Vérifiable** : code lisible, sans obfuscation ni script distant, releases signées par empreinte SHA-256.
 
+## Nouveautés de la 2.0
+
+La version 2.0 apporte surtout **le choix du format partout** :
+
+- **Vidéo** : MP4, WEBM, MKV, MOV, AVI ou GIF animé, en entier ou en **extrait** (début / fin), avec la taille estimée de chaque qualité jusqu'à la 4K.
+- **Audio** : MP3, M4A, AAC, OPUS, FLAC ou WAV, débit au choix.
+- **Widget vidéo** : menu ▾ au survol de chaque vidéo pour choisir le format au moment du clic.
+- **Exports** : PDF ou image de page entière, images en PNG/JPG/WEBP, sous-titres SRT/VTT/ASS/LRC/TXT, carnet en Markdown/HTML/TXT/CSV/JSON, feuille de temps en CSV/Markdown/HTML/JSON, couleurs en HEX/RGB/HSL/OKLCH/CMJN.
+- **Fiabilité** : bouton ↻ pour relancer, messages clairs, et chaque téléchargement travaille dans son propre dossier : rien n'est jamais écrasé.
+
+Le détail est dans le [journal des versions](CHANGELOG.md). Pour passer de la 1.0 à la 2.0 : récupère le code, relance `install.sh` (nouvel hôte local), puis ↻ **Actualiser** sous chaque extension dans `chrome://extensions`.
+
 ## Sommaire
 
+- [Nouveautés de la 2.0](#nouveautés-de-la-20)
 - [Les extensions](#les-extensions)
 - [Installation](#installation)
 - [Hôte local](#hôte-local-téléchargements-vidéo-et-audio)
@@ -26,12 +39,12 @@ Aruzen Web Media réunit des outils du quotidien pour les créatifs, chercheurs 
 
 | | Extension | En une phrase | Catégorie | Permissions |
 |---|---|---|---|---|
-| <img src="extensions/01-video-grab/icons/32.png" width="24" alt=""> | [Vidéo Grab](extensions/01-video-grab/) | Télécharge la vidéo de la page en MP4, qualité au choix. | Vidéo & audio | `nativeMessaging`, `contextMenus`, `storage`, `activeTab` |
-| <img src="extensions/02-music-grab/icons/32.png" width="24" alt=""> | [Music Grab](extensions/02-music-grab/) | Extrait l'audio d'une page en MP3, M4A, Opus, FLAC ou WAV, avec pochette et tags. | Vidéo & audio | `nativeMessaging`, `contextMenus`, `storage`, `activeTab` |
+| <img src="extensions/01-video-grab/icons/32.png" width="24" alt=""> | [Vidéo Grab](extensions/01-video-grab/) | Télécharge la vidéo de la page au format de ton choix (MP4, WEBM, MKV, MOV, AVI, GIF ou audio), en entier ou en extrait. | Vidéo & audio | `nativeMessaging`, `contextMenus`, `storage`, `activeTab`, `scripting` |
+| <img src="extensions/02-music-grab/icons/32.png" width="24" alt=""> | [Music Grab](extensions/02-music-grab/) | Extrait l'audio d'une page en MP3, M4A, AAC, Opus, FLAC ou WAV, avec pochette et tags, en entier ou en extrait. | Vidéo & audio | `nativeMessaging`, `contextMenus`, `storage`, `activeTab`, `scripting` |
 | <img src="extensions/03-playlist-grab/icons/32.png" width="24" alt=""> | [Playlist Grab](extensions/03-playlist-grab/) | Télécharge une playlist, un album ou une chaîne entière, avec choix des éléments. | Vidéo & audio | `nativeMessaging`, `storage`, `activeTab` |
 | <img src="extensions/04-media-sniffer/icons/32.png" width="24" alt=""> | [Media Sniffer](extensions/04-media-sniffer/) | Repère les fichiers vidéo et audio réellement chargés par la page (MP4, MP3, HLS, DASH). | Vidéo & audio | `nativeMessaging`, `webRequest`, `storage`, `downloads`, `<all_urls>` |
 | <img src="extensions/05-pdf-studio/icons/32.png" width="24" alt=""> | [PDF Studio](extensions/05-pdf-studio/) | Enregistre une page en PDF A4 propre et récupère tous les PDF liés. | Images & documents | `debugger`, `downloads`, `scripting`, `activeTab`, `storage`, `offscreen` |
-| <img src="extensions/06-image-grab/icons/32.png" width="24" alt=""> | [Image Grab](extensions/06-image-grab/) | Affiche toutes les images d'une page et télécharge la sélection en un clic. | Images & documents | `downloads`, `scripting`, `activeTab`, `storage` |
+| <img src="extensions/06-image-grab/icons/32.png" width="24" alt=""> | [Image Grab](extensions/06-image-grab/) | Affiche toutes les images d'une page et télécharge la sélection en un clic. | Images & documents | `downloads`, `scripting`, `activeTab`, `storage`, `<all_urls>` |
 | <img src="extensions/07-subtitles-grab/icons/32.png" width="24" alt=""> | [Sous-titres & Miniatures](extensions/07-subtitles-grab/) | Télécharge les sous-titres d'une vidéo en SRT, et sa miniature HD. | Vidéo & audio | `nativeMessaging`, `activeTab`, `storage` |
 | <img src="extensions/08-link-bulk/icons/32.png" width="24" alt=""> | [Liens en masse](extensions/08-link-bulk/) | Liste tous les fichiers liés d'une page et télécharge la sélection. | Images & documents | `downloads`, `scripting`, `activeTab`, `storage` |
 | <img src="extensions/09-tab-recorder/icons/32.png" width="24" alt=""> | [Enregistreur d'onglet](extensions/09-tab-recorder/) | Enregistre l'image et le son d'un onglet en MP4. | Vidéo & audio | `tabCapture`, `offscreen`, `downloads`, `storage`, `activeTab` |
@@ -84,6 +97,8 @@ Le script copie l'hôte dans `~/Library/Application Support/AruzenWebMedia`, l'e
 
 Télécharge la vidéo de la page en MP4, qualité au choix.
 
+**Nouveau dans la 2.0** : Choix du format : MP4, WEBM, MKV, MOV, AVI, GIF animé ou audio seul (MP3, M4A, AAC, OPUS, FLAC, WAV) · Taille estimée pour chaque qualité, jusqu'à la 4K ; codec compatible (H.264) ou meilleure qualité (AV1/VP9) · Extrait : seulement un passage, début et fin (⏱ reprend la position de lecture) · Sous-titres intégrés à la vidéo · Clic droit › « Télécharger en… » pour choisir le format sans ouvrir la fenêtre.
+
 - Choix de la qualité (meilleure, 1080p, 720p…) et du format (MP4, MKV)
 - Clic droit sur la page ou sur un lien
 - Raccourci ⌥⇧V
@@ -99,6 +114,7 @@ Télécharge la vidéo de la page en MP4, qualité au choix.
 | `contextMenus` | Ajoute ses entrées au clic droit. |
 | `storage` | Garde tes réglages et ton historique dans le stockage local du navigateur. |
 | `activeTab` | Accède à l'onglet actif seulement quand tu cliques sur l'icône, un raccourci ou le menu. |
+| `scripting` | Lit la position de lecture de la vidéo de l'onglet actif pour fixer le début ou la fin d'un extrait (bouton ⏱). |
 
 </details>
 
@@ -107,6 +123,8 @@ Installation : dossier `extensions/01-video-grab`. [README de l'extension](exten
 #### <img src="extensions/02-music-grab/icons/32.png" width="20" alt=""> Music Grab
 
 Extrait l'audio d'une page en MP3, M4A, Opus, FLAC ou WAV, avec pochette et tags.
+
+**Nouveau dans la 2.0** : Nouveau format AAC, en plus de MP3, M4A, OPUS, FLAC et WAV · Débit au choix : meilleur, 320, 192 ou 128 kb/s · Extrait : seulement un passage · Pochette intégrée aussi en FLAC et OPUS.
 
 - MP3 universel, M4A sans réencodage, Opus, FLAC ou WAV
 - Pochette et métadonnées intégrées
@@ -122,6 +140,7 @@ Extrait l'audio d'une page en MP3, M4A, Opus, FLAC ou WAV, avec pochette et tags
 | `contextMenus` | Ajoute ses entrées au clic droit. |
 | `storage` | Garde tes réglages et ton historique dans le stockage local du navigateur. |
 | `activeTab` | Accède à l'onglet actif seulement quand tu cliques sur l'icône, un raccourci ou le menu. |
+| `scripting` | Lit la position de lecture de l'onglet actif pour fixer le début ou la fin d'un extrait (bouton ⏱). |
 
 </details>
 
@@ -130,6 +149,8 @@ Installation : dossier `extensions/02-music-grab`. [README de l'extension](exten
 #### <img src="extensions/03-playlist-grab/icons/32.png" width="20" alt=""> Playlist Grab
 
 Télécharge une playlist, un album ou une chaîne entière, avec choix des éléments.
+
+**Nouveau dans la 2.0** : Tous les formats vidéo et audio pour toute la playlist · Éléments à cocher directement dans la liste · Qualités 4K et 360p, débit audio réglable.
 
 - Analyse de la liste avant téléchargement
 - Vidéo ou audio MP3, qualité au choix
@@ -153,6 +174,8 @@ Installation : dossier `extensions/03-playlist-grab`. [README de l'extension](ex
 #### <img src="extensions/04-media-sniffer/icons/32.png" width="20" alt=""> Media Sniffer
 
 Repère les fichiers vidéo et audio réellement chargés par la page (MP4, MP3, HLS, DASH).
+
+**Nouveau dans la 2.0** : Filtre par type : vidéo, audio ou flux · Flux HLS/DASH reconstitués en MP4, MKV, WEBM, MOV, MP3 ou M4A · « Tout télécharger » et « Copier les liens ».
 
 - Détection en direct des flux lus par la page
 - Téléchargement direct ou via yt-dlp pour les flux segmentés
@@ -178,6 +201,8 @@ Installation : dossier `extensions/04-media-sniffer`. [README de l'extension](ex
 
 Télécharge les sous-titres d'une vidéo en SRT, et sa miniature HD.
 
+**Nouveau dans la 2.0** : Sous-titres en SRT, VTT, ASS, LRC ou TXT (transcription sans horodatage) · Miniature HD en JPG, PNG ou WEBP.
+
 - Toutes les langues disponibles, y compris les sous-titres automatiques
 - Conversion en SRT
 - Miniature en haute définition
@@ -199,6 +224,8 @@ Installation : dossier `extensions/07-subtitles-grab`. [README de l'extension](e
 #### <img src="extensions/09-tab-recorder/icons/32.png" width="20" alt=""> Enregistreur d'onglet
 
 Enregistre l'image et le son d'un onglet en MP4.
+
+**Nouveau dans la 2.0** : Format MP4 (H.264) ou WEBM (VP9) · Définition jusqu'à la 4K et 60 images/s · Pause et reprise pendant l'enregistrement.
 
 - Trois niveaux de qualité
 - Encodage matériel H.264, peu gourmand
@@ -224,6 +251,8 @@ Installation : dossier `extensions/09-tab-recorder`. [README de l'extension](ext
 
 Ajoute des boutons « Vidéo » et « MP3 » au survol de chaque vidéo.
 
+**Nouveau dans la 2.0** : Menu ▾ au survol des vidéos avec tous les formats vidéo et audio · Format par défaut des boutons ⬇ et ♪ réglable · Comptes connectés (désactivé par défaut) : contenus réservés aux abonnés via ta session d'un navigateur de ce Mac.
+
 - Boutons au survol, y compris dans les lecteurs intégrés
 - Liste de tous les téléchargements
 - Réglages de performance (téléchargements simultanés, qualité)
@@ -247,6 +276,8 @@ Installation : dossier `extensions/10-video-widget`. [README de l'extension](ext
 #### <img src="extensions/05-pdf-studio/icons/32.png" width="20" alt=""> PDF Studio
 
 Enregistre une page en PDF A4 propre et récupère tous les PDF liés.
+
+**Nouveau dans la 2.0** : PDF, ou image PNG / JPG / WEBP de la page entière · Papier A4, A3, A5, Lettre ou Légal, échelle et pages à imprimer · En-tête (titre, date) et numéros de page en option.
 
 - PDF A4 portrait ou paysage, sans publicités ni menus parasites
 - Liste et téléchargement groupé des PDF liés à la page
@@ -272,6 +303,8 @@ Installation : dossier `extensions/05-pdf-studio`. [README de l'extension](exten
 
 Affiche toutes les images d'une page et télécharge la sélection en un clic.
 
+**Nouveau dans la 2.0** : Filtre par type d'image (JPG, PNG, WEBP, GIF, SVG, AVIF…) · Conversion à l'enregistrement en PNG, JPG ou WEBP, qualité réglable · Copie des liens cochés.
+
 - Images, fonds CSS et versions haute résolution (srcset)
 - Filtre par taille minimale
 - Téléchargement groupé
@@ -285,6 +318,7 @@ Affiche toutes les images d'une page et télécharge la sélection en un clic.
 | `downloads` | Enregistre les fichiers dans Téléchargements › Web Media. |
 | `scripting` | Injecte un script d'analyse ou d'insertion dans la page, seulement à ta demande. |
 | `activeTab` | Accède à l'onglet actif seulement quand tu cliques sur l'icône, un raccourci ou le menu. |
+| `<all_urls>` | Relit les images que tu as cochées pour les convertir en PNG, JPG ou WEBP. Rien n'est lu sans ton clic. |
 | `storage` | Garde tes réglages et ton historique dans le stockage local du navigateur. |
 
 </details>
@@ -294,6 +328,8 @@ Installation : dossier `extensions/06-image-grab`. [README de l'extension](exten
 #### <img src="extensions/08-link-bulk/icons/32.png" width="20" alt=""> Liens en masse
 
 Liste tous les fichiers liés d'une page et télécharge la sélection.
+
+**Nouveau dans la 2.0** : Export de la liste en TXT, CSV ou Markdown · Copie des liens cochés et sous-dossier de rangement au choix · Catégories Design et Code.
 
 - Documents, archives, audio, vidéo, applications…
 - Filtres par type et par nom
@@ -317,6 +353,8 @@ Installation : dossier `extensions/08-link-bulk`. [README de l'extension](extens
 #### <img src="extensions/15-image-hd/icons/32.png" width="20" alt=""> Image HD
 
 Retrouve l'original haute définition des images, même quand le site n'affiche qu'une miniature.
+
+**Nouveau dans la 2.0** : Enregistrement au format d'origine, PNG, JPG ou WEBP.
 
 - Analyse des srcset, attributs cachés, liens plein écran, fonds, métadonnées et code de la page
 - Règles pour les plateformes d'images courantes et les paramètres de taille (w=, width=, resize=…)
@@ -343,6 +381,8 @@ Installation : dossier `extensions/15-image-hd`. [README de l'extension](extensi
 
 Gomme intelligente : peins une zone et l'image se reconstitue d'après son contenu, en local.
 
+**Nouveau dans la 2.0** : Qualité JPG / WEBP et taille d'export (origine, 4K, 2048 ou 1080 px).
+
 - Pinceau (B), rectangle (R), gomme du masque (E)
 - Reconstruction PatchMatch calculée dans le navigateur, rien n'est envoyé en ligne
 - Annulation ⌘Z, comparaison avec l'original (touche A)
@@ -367,6 +407,8 @@ Installation : dossier `extensions/16-retouche`. [README de l'extension](extensi
 #### <img src="extensions/11-design-kit/icons/32.png" width="20" alt=""> Design Kit
 
 Charte d'un site (couleurs, polices, export .ase), SVG, moodboard, règle et captures responsive.
+
+**Nouveau dans la 2.0** : Copie des couleurs en HEX, RGB, HSL, OKLCH ou CMJN · Exports de charte SCSS et Tailwind.
 
 - Couleurs classées par rôle (fond, texte, accent), variables CSS et polices
 - Export .ase, .svg, CSS ou JSON
@@ -396,6 +438,8 @@ Installation : dossier `extensions/11-design-kit`. [README de l'extension](exten
 #### <img src="extensions/12-research/icons/32.png" width="20" alt=""> Research
 
 Surligneur et carnet de citations, sessions d'onglets, libération de mémoire et veille de pages.
+
+**Nouveau dans la 2.0** : Export du carnet en Markdown, HTML, TXT, CSV ou JSON.
 
 - Surlignage en 4 couleurs avec notes, restauré à chaque visite (⌥⇧H)
 - Carnet par projet dans le panneau latéral, avec recherche et export Markdown
@@ -429,6 +473,8 @@ Installation : dossier `extensions/12-research`. [README de l'extension](extensi
 
 Studio d'aperçu de publications sur plusieurs réseaux, légendes et hashtags par marque, liens UTM.
 
+**Nouveau dans la 2.0** : Recadrages exportés en JPG, PNG ou WEBP (fond blanc automatique en JPG).
+
 - Aperçu fidèle par réseau, avec alertes (limite de caractères, coupure « voir plus », hashtags)
 - Recadrages exportés à la bonne taille pour chaque réseau
 - Bibliothèque de légendes et de hashtags par marque, insertion par clic droit
@@ -456,6 +502,8 @@ Installation : dossier `extensions/13-social`. [README de l'extension](extension
 #### <img src="extensions/14-workspace/icons/32.png" width="20" alt=""> Workspace
 
 Capture de tâches, chronomètre par client avec feuille de temps, prompts à variables.
+
+**Nouveau dans la 2.0** : Feuille de temps en CSV (Excel), Markdown, page imprimable HTML ou JSON, avec le total des heures.
 
 - Capture de la page ou d'une sélection en tâche (⌥⇧W), avec client et échéance
 - Envoi facultatif vers une base de tâches en ligne, avec ton propre jeton d'intégration
@@ -492,6 +540,8 @@ Installation : dossier `extensions/14-workspace`. [README de l'extension](extens
 - Le Widget vidéo et le surligneur de Research ont un script présent sur les pages : le premier cherche les lecteurs vidéo, le second ne réagit qu'à une sélection de texte. Ils n'envoient rien.
 - Research lit le titre et l'adresse de tes onglets quand tu enregistres une session ou endors des onglets.
 
+- Option « Comptes connectés » du Widget vidéo (désactivée par défaut) : l'hôte local laisse yt-dlp lire les cookies du navigateur que tu choisis, sur ta machine, uniquement pour le site de la vidéo demandée.
+
 **Où vont les données**
 
 - Dans le stockage local du navigateur (`chrome.storage.local`, IndexedDB) et dans ton dossier Téléchargements › Web Media.
@@ -515,7 +565,7 @@ Chaque release contient un ZIP par extension et un fichier `SHA256SUMS.txt`. Les
 shasum -a 256 -c SHA256SUMS.txt
 ```
 
-Sous Windows : `Get-FileHash .\01-video-grab-1.0.0.zip -Algorithm SHA256`.
+Sous Windows : `Get-FileHash .\01-video-grab-2.0.0.zip -Algorithm SHA256`.
 
 ## Contribuer et signaler un bug
 

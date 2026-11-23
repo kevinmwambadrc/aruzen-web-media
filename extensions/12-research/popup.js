@@ -1,6 +1,10 @@
-import { activeTab, $, esc, isWebUrl } from "./shared/lib.js";
-import { projects, addProject, allPages, toMarkdown, download, norm, siteOf, COLORS } from "./store.js";
+import { activeTab, $, esc, isWebUrl, whatsNew } from "./shared/lib.js";
+import { projects, addProject, allPages, toMarkdown, download, norm, siteOf, COLORS, EXPORT_FORMATS, exportAs } from "./store.js";
 
+whatsNew([
+  "Export du carnet au format choisi : Markdown, page web HTML, texte, tableur CSV ou JSON",
+  "Le même choix dans le carnet en panneau latéral",
+]);
 const tab = await activeTab();
 const web = isWebUrl(tab?.url);
 
@@ -47,9 +51,15 @@ $("#exportAll").onclick = async () => {
   const project = $("#project").value;
   const pages = (await allPages()).map((p) => ({ ...p, highlights: p.highlights.filter((h) => (h.project || "Général") === project) }))
     .filter((p) => p.highlights.length);
-  download(toMarkdown(pages, project), `Web Media/Recherche/${project} ${new Date().toISOString().slice(0, 10)}.md`);
+  const fmt = $("#xfmt").value;
+  chrome.storage.local.set({ xfmt: fmt });
+  const x = exportAs(fmt, pages, project);
+  download(x.text, `Web Media/Recherche/${project} ${new Date().toISOString().slice(0, 10)}.${x.ext}`, x.type);
   $("#exportAll").textContent = `${pages.length} page(s) exportée(s) ✓`;
 };
+
+$("#xfmt").innerHTML = EXPORT_FORMATS.map((f) => `<option value="${f.v}">${f.l}</option>`).join("");
+$("#xfmt").value = (await chrome.storage.local.get("xfmt")).xfmt || "md";
 
 // ---------- Sessions ----------
 async function loadSessions() {

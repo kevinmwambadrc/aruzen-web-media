@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Aruzen · Social",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Studio d'aperçu pour tes réseaux sociaux (et ceux que tu ajoutes), bibliothèque de légendes et hashtags par marque, liens UTM. Tout se règle dans ⚙ Réglages.",
   "icons": {
     "16": "icons/16.png",

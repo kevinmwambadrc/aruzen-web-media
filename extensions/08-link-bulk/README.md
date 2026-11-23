@@ -2,7 +2,13 @@
 
 # Liens en masse
 
-**Liste tous les fichiers liés d'une page et télécharge la sélection.** · version 1.0.0 · catégorie : Images & documents
+**Liste tous les fichiers liés d'une page et télécharge la sélection.** · version 2.0.0 · catégorie : Images & documents
+
+## Nouveau dans la 2.0
+
+- Export de la liste en TXT, CSV ou Markdown
+- Copie des liens cochés et sous-dossier de rangement au choix
+- Catégories Design et Code
 
 ## Fonctionnalités
 

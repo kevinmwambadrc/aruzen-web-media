@@ -1,7 +1,11 @@
-import { activeTab, $, esc, isWebUrl } from "./shared/lib.js";
+import { activeTab, $, esc, isWebUrl, whatsNew } from "./shared/lib.js";
 import { clients, tasks, saveTask, timer, startTimer, stopTimer, entries, prompts, fmtDur, today, dueChips, variables } from "./store.js";
 import { insertAtCursor } from "./insert.js";
 
+whatsNew([
+  "Feuille de temps exportable en CSV (Excel), Markdown, page imprimable HTML ou JSON",
+  "Total des heures ajouté aux exports",
+]);
 const tab = await activeTab();
 const web = isWebUrl(tab?.url);
 const clientList = await clients();

@@ -2,7 +2,12 @@
 
 # Design Kit
 
-**Charte d'un site (couleurs, polices, export .ase), SVG, moodboard, règle et captures responsive.** · version 1.0.0 · catégorie : Création & productivité
+**Charte d'un site (couleurs, polices, export .ase), SVG, moodboard, règle et captures responsive.** · version 2.0.0 · catégorie : Création & productivité
+
+## Nouveau dans la 2.0
+
+- Copie des couleurs en HEX, RGB, HSL, OKLCH ou CMJN
+- Exports de charte SCSS et Tailwind
 
 ## Fonctionnalités
 

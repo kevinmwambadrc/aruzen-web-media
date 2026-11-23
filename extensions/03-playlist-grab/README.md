@@ -2,7 +2,15 @@
 
 # Playlist Grab
 
-**Télécharge une playlist, un album ou une chaîne entière, avec choix des éléments.** · version 1.0.0 · catégorie : Vidéo & audio
+**Télécharge une playlist, un album ou une chaîne entière, avec choix des éléments.** · version 2.0.0 · catégorie : Vidéo & audio
+
+## Nouveau dans la 2.0
+
+- Tous les formats vidéo et audio pour toute la playlist
+- Éléments à cocher directement dans la liste
+- Qualités 4K et 360p, débit audio réglable
+- Bouton ↻ pour relancer un téléchargement en erreur, messages d'erreur clairs
+- Chaque tâche travaille dans son propre dossier : deux téléchargements de la même vidéo ne s'écrasent plus (« nom (2) »)
 
 ## Fonctionnalités
 

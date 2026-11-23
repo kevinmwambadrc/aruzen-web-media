@@ -2,7 +2,11 @@
 
 # Retouche
 
-**Gomme intelligente : peins une zone et l'image se reconstitue d'après son contenu, en local.** · version 1.0.0 · catégorie : Images & documents
+**Gomme intelligente : peins une zone et l'image se reconstitue d'après son contenu, en local.** · version 2.0.0 · catégorie : Images & documents
+
+## Nouveau dans la 2.0
+
+- Qualité JPG / WEBP et taille d'export (origine, 4K, 2048 ou 1080 px)
 
 ## Fonctionnalités
 

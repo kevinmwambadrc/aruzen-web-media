@@ -1,8 +1,12 @@
-import { activeTab, $, esc, isWebUrl } from "./shared/lib.js";
+import { activeTab, $, esc, isWebUrl, whatsNew } from "./shared/lib.js";
 import { getLibrary, fill, UTM_EXTRA } from "./data.js";
 import { buildUtm, remember } from "./utm.js";
 import { insertAtCursor } from "./insert.js";
 
+whatsNew([
+  "Studio d'aperçu : export des recadrages en JPG, PNG ou WEBP",
+  "Fond blanc automatique en JPG pour les images transparentes",
+]);
 const tab = await activeTab();
 const web = isWebUrl(tab?.url);
 

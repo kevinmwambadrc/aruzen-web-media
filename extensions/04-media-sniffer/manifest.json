@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Aruzen · Media Sniffer",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Repère les fichiers vidéo et audio chargés par la page (MP4, MP3, flux HLS m3u8, DASH) et les télécharge.",
   "icons": {
     "16": "icons/16.png",

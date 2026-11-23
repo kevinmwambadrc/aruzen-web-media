@@ -2,7 +2,11 @@
 
 # Social
 
-**Studio d'aperçu de publications sur plusieurs réseaux, légendes et hashtags par marque, liens UTM.** · version 1.0.0 · catégorie : Création & productivité
+**Studio d'aperçu de publications sur plusieurs réseaux, légendes et hashtags par marque, liens UTM.** · version 2.0.0 · catégorie : Création & productivité
+
+## Nouveau dans la 2.0
+
+- Recadrages exportés en JPG, PNG ou WEBP (fond blanc automatique en JPG)
 
 ## Fonctionnalités
 

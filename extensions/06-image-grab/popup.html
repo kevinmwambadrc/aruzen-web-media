@@ -10,8 +10,15 @@
       </label>
       <label><input type="checkbox" id="all"> Tout cocher</label>
     </div>
+    <div id="types" class="chips"></div>
     <div id="grid" class="grid"></div>
+    <div class="row">
+      <label>Enregistrer en <select id="fmt"></select></label>
+      <label id="qWrap">Qualité <select id="q"><option value="0.95">Haute</option><option value="0.85">Moyenne</option><option value="0.7">Légère</option></select></label>
+      <button id="copy" class="mini" title="Copier les liens cochés">⧉ Liens</button>
+    </div>
     <button id="dl" class="primary">Télécharger la sélection</button>
+    <div id="msg" class="mut small"></div>
   </main>
   <script type="module" src="popup.js"></script>
 </body>

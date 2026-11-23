@@ -5,18 +5,21 @@
   <header><img src="icons/32.png" alt=""><h1>Music Grab</h1><span class="grow"></span><button id="folder" class="mini">Dossier</button></header>
   <main>
     <div id="info" class="card"><div class="mut">Analyse de la page…</div></div>
-    <div class="row">
-      <label>Format
-        <select id="fmt">
-          <option value="mp3">MP3 (universel)</option>
-          <option value="m4a">M4A (sans réencodage, plus rapide)</option>
-          <option value="opus">Opus</option>
-          <option value="flac">FLAC</option>
-          <option value="wav">WAV</option>
-        </select>
-      </label>
-    </div>
+    <h2>Format</h2>
+    <div id="formats"></div>
+    <div class="row"><label id="aqWrap">Débit <select id="aq"></select></label></div>
+    <details class="adv" id="adv">
+      <summary>Extrait (un passage seulement)</summary>
+      <div class="row">
+        <label>Début <input id="start" class="time" type="text" placeholder="0:00"></label>
+        <button id="startNow" class="mini" title="Position de lecture">⏱</button>
+        <label>Fin <input id="end" class="time" type="text" placeholder="fin"></label>
+        <button id="endNow" class="mini" title="Position de lecture">⏱</button>
+        <button id="clip0" class="mini" title="Morceau entier">✕</button>
+      </div>
+    </details>
     <div class="row"><input id="url" type="text" class="grow" placeholder="Ou colle un lien…"><button id="go" class="primary">Extraire</button></div>
+    <div id="msg" class="small"></div>
     <h2>Téléchargements</h2>
     <div id="jobs" class="jobs"></div>
   </main>

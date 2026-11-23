@@ -8,12 +8,22 @@
     <div class="card">
       <div class="title" id="ttitle"></div>
       <div class="timer" id="timer">00:00</div>
-      <div class="row" id="opts">
-        <label><input type="checkbox" id="audio" checked> Son</label>
-        <label>Qualité <select id="bitrate"><option value="2500000">Standard</option><option value="5000000" selected>Haute</option><option value="8000000">Très haute</option></select></label>
+      <div id="opts">
+        <div class="row">
+          <label>Format <select id="fmt"><option value="mp4">MP4 (H.264)</option><option value="webm">WEBM (VP9)</option></select></label>
+          <label>Définition <select id="res"><option value="1280">720p</option><option value="1920" selected>1080p</option><option value="2560">1440p</option><option value="3840">4K</option></select></label>
+        </div>
+        <div class="row" style="margin-top:8px">
+          <label>Images/s <select id="fps"><option value="30">30</option><option value="60">60</option></select></label>
+          <label>Qualité <select id="bitrate"><option value="2500000">Standard</option><option value="5000000" selected>Haute</option><option value="8000000">Très haute</option><option value="16000000">Maximale</option></select></label>
+          <label><input type="checkbox" id="audio" checked> Son</label>
+        </div>
       </div>
     </div>
-    <button id="toggle" class="primary">● Démarrer l'enregistrement</button>
+    <div class="row">
+      <button id="toggle" class="primary grow">● Démarrer l'enregistrement</button>
+      <button id="pause" hidden>❚❚ Pause</button>
+    </div>
     <div id="msg" class="mut small">Le fichier est enregistré dans Téléchargements › Web Media › Enregistrements. Tu peux fermer cette fenêtre pendant l'enregistrement.</div>
   </main>
   <script type="module" src="popup.js"></script>
