@@ -6,12 +6,16 @@
   <main>
     <div class="row"><input id="url" type="text" class="grow" placeholder="Lien d'une playlist, d'un album ou d'une chaîne"><button id="scan">Analyser</button></div>
     <div id="info" class="card"><div class="mut">Analyse de la page…</div></div>
+    <div class="row"><label><input type="checkbox" id="all"> Tout cocher</label><span class="grow"></span><span id="sel" class="mut small"></span></div>
     <div id="entries" class="list"></div>
+    <h2>Format</h2>
+    <div id="formats"></div>
     <div class="row">
-      <label>Type <select id="media"><option value="video">Vidéo</option><option value="audio">Audio MP3</option></select></label>
-      <label>Qualité <select id="quality"><option value="best">Meilleure</option><option value="1080">1080p</option><option value="720">720p</option><option value="480">480p</option></select></label>
+      <label id="qWrap">Qualité <select id="quality"><option value="best">Meilleure</option><option value="2160">4K</option><option value="1080">1080p</option><option value="720">720p</option><option value="480">480p</option><option value="360">360p</option></select></label>
+      <label id="aqWrap">Débit <select id="aq"></select></label>
     </div>
-    <div class="row"><label class="grow">Éléments <input id="items" type="text" class="grow" placeholder="tous, ou ex. 1-10,15"></label><button id="go" class="primary">Tout télécharger</button></div>
+    <div class="row"><label class="grow">Éléments <input id="items" type="text" class="grow" placeholder="tous, ou ex. 1-10,15 (ou coche la liste)"></label><button id="go" class="primary">Télécharger</button></div>
+    <div id="msg" class="small"></div>
     <h2>Téléchargements</h2>
     <div id="jobs" class="jobs"></div>
   </main>

@@ -1,4 +1,4 @@
-import { allPages, projects, toMarkdown, download, siteOf, COLORS } from "./store.js";
+import { allPages, projects, toMarkdown, download, siteOf, COLORS, EXPORT_FORMATS, exportAs } from "./store.js";
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -67,7 +67,14 @@ $("#list").onclick = async (e) => {
 };
 
 const label = () => ($("#project").value === "*" ? "" : $("#project").value);
-$("#export").onclick = async () => download(toMarkdown(shown, label()), `Web Media/Recherche/${label() || "Carnet"} ${new Date().toISOString().slice(0, 10)}.md`);
+$("#xfmt").innerHTML = EXPORT_FORMATS.map((f) => `<option value="${f.v}">${f.l}</option>`).join("");
+$("#xfmt").value = (await chrome.storage.local.get("xfmt")).xfmt || "md";
+$("#export").onclick = async () => {
+  const fmt = $("#xfmt").value;
+  chrome.storage.local.set({ xfmt: fmt });
+  const x = exportAs(fmt, shown, label());
+  download(x.text, `Web Media/Recherche/${label() || "Carnet"} ${new Date().toISOString().slice(0, 10)}.${x.ext}`, x.type);
+};
 $("#copy").onclick = async () => {
   await navigator.clipboard.writeText(toMarkdown(shown, label()));
   $("#copy").textContent = "Copié ✓ (colle dans Notion)";

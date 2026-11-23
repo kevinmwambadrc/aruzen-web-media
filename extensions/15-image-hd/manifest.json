@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Aruzen · Image HD",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Retrouve la version haute définition des images d'une page, même quand le site n'affiche qu'une miniature : srcset, attributs cachés, liens, métadonnées, code de la page et règles pour les plateformes courantes.",
   "icons": {
     "16": "icons/16.png",

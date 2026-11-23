@@ -1,4 +1,17 @@
-import { activeTab, $, esc, isWebUrl } from "./shared/lib.js";
+import { activeTab, $, esc, isWebUrl, remember, persist, whatsNew } from "./shared/lib.js";
+
+whatsNew([
+  "Choix du format : PDF, ou image PNG / JPG / WEBP de la page entière",
+  "Papier A4, A3, A5, Lettre ou Légal, échelle et pages à imprimer",
+  "En-tête (titre, date) et numéros de page en option",
+]);
+const prefs = await remember(["out", "paper", "scale"]);
+$("#out").value = prefs.out || "pdf";
+$("#paper").value = prefs.paper || "A4";
+$("#scale").value = prefs.scale || "1";
+const syncOut = () => document.querySelectorAll(".pdfonly").forEach((r) => (r.hidden = $("#out").value !== "pdf"));
+$("#out").onchange = syncOut;
+syncOut();
 
 const tab = await activeTab();
 $("#ptitle").textContent = tab.title || tab.url;
@@ -11,12 +24,15 @@ if (PDF.test(tab.url)) {
 
 $("#print").onclick = async () => {
   $("#print").disabled = true;
-  $("#pmsg").textContent = "Création du PDF…";
+  const out = $("#out").value;
+  persist({ out, paper: $("#paper").value, scale: $("#scale").value });
+  $("#pmsg").textContent = out === "pdf" ? "Création du PDF…" : "Capture de la page entière…";
   const r = await chrome.runtime.sendMessage({
-    cmd: "print", tabId: tab.id, title: tab.title,
+    cmd: out === "pdf" ? "print" : "shot", format: out, tabId: tab.id, title: tab.title,
     landscape: $("#landscape").checked, background: $("#background").checked, margins: $("#margins").checked,
+    paper: $("#paper").value, scale: Number($("#scale").value), pages: $("#pages").value.trim(), header: $("#header").checked,
   });
-  $("#pmsg").innerHTML = r?.ok ? `<span class="ok">Enregistré dans Téléchargements › Web Media › PDF</span>` : `<span class="err">${esc(r?.error || "Échec")}</span>`;
+  $("#pmsg").innerHTML = r?.ok ? `<span class="ok">Enregistré dans Téléchargements › Web Media › ${out === "pdf" ? "PDF" : "Captures"}${r.note ? " · " + esc(r.note) : ""}</span>` : `<span class="err">${esc(r?.error || "Échec")}</span>`;
   $("#print").disabled = false;
 };
 

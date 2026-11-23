@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Aruzen · Music Grab",
-  "version": "1.0.0",
-  "description": "Extrait l'audio d'une page (plateformes vidéo et musicales) en MP3, M4A, FLAC ou WAV avec pochette et tags.",
+  "version": "2.0.0",
+  "description": "Extrait l'audio d'une page (plateformes vidéo et musicales) en MP3, M4A, AAC, OPUS, FLAC ou WAV avec pochette et tags, débit au choix, en entier ou en extrait.",
   "icons": {
     "16": "icons/16.png",
     "48": "icons/48.png",
@@ -23,7 +23,8 @@
     "nativeMessaging",
     "contextMenus",
     "storage",
-    "activeTab"
+    "activeTab",
+    "scripting"
   ],
   "commands": {
     "download-audio": {

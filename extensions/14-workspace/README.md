@@ -2,7 +2,11 @@
 
 # Workspace
 
-**Capture de tâches, chronomètre par client avec feuille de temps, prompts à variables.** · version 1.0.0 · catégorie : Création & productivité
+**Capture de tâches, chronomètre par client avec feuille de temps, prompts à variables.** · version 2.0.0 · catégorie : Création & productivité
+
+## Nouveau dans la 2.0
+
+- Feuille de temps en CSV (Excel), Markdown, page imprimable HTML ou JSON, avec le total des heures
 
 ## Fonctionnalités
 

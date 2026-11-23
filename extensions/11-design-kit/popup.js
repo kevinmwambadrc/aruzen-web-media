@@ -1,8 +1,48 @@
-import { activeTab, $, esc, isWebUrl } from "./shared/lib.js";
+import { activeTab, $, esc, isWebUrl, whatsNew } from "./shared/lib.js";
 import { scanBrand, scanSvgs } from "./scanners.js";
 import { cluster, roles, hex } from "./color.js";
 import { encodeAse } from "./ase.js";
 import { listBoards, listItems, createBoard, activeBoard } from "./db.js";
+
+whatsNew([
+  "Copie des couleurs au format choisi : HEX, RGB, HSL, OKLCH ou CMJN",
+  "Deux nouveaux exports de charte : SCSS et Tailwind",
+]);
+
+// ---------- formats de couleur ----------
+function hsl([r, g, b]) {
+  r /= 255; g /= 255; b /= 255;
+  const max = Math.max(r, g, b), min = Math.min(r, g, b), l = (max + min) / 2, d = max - min;
+  let h = 0, s = 0;
+  if (d) {
+    s = d / (1 - Math.abs(2 * l - 1));
+    h = max === r ? ((g - b) / d) % 6 : max === g ? (b - r) / d + 2 : (r - g) / d + 4;
+  }
+  return `hsl(${Math.round((h * 60 + 360) % 360)} ${Math.round(s * 100)}% ${Math.round(l * 100)}%)`;
+}
+function oklch([r, g, b]) {
+  const lin = (c) => ((c /= 255) <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
+  [r, g, b] = [lin(r), lin(g), lin(b)];
+  const l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b);
+  const m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b);
+  const s = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b);
+  const L = 0.2104542553 * l + 0.793617785 * m - 0.0040720468 * s;
+  const A = 1.9779984951 * l - 2.428592205 * m + 0.4505937099 * s;
+  const B = 0.0259040371 * l + 0.7827717662 * m - 0.808675766 * s;
+  const C = Math.hypot(A, B), H = (Math.atan2(B, A) * 180 / Math.PI + 360) % 360;
+  return `oklch(${(L * 100).toFixed(1)}% ${C.toFixed(3)} ${C < 0.002 ? 0 : H.toFixed(1)})`;
+}
+function cmyk([r, g, b]) {
+  const k = 1 - Math.max(r, g, b) / 255;
+  if (k >= 1) return "C0 M0 J0 N100";
+  const f = (c) => Math.round(((1 - c / 255 - k) / (1 - k)) * 100);
+  return `C${f(r)} M${f(g)} J${f(b)} N${Math.round(k * 100)}`;
+}
+const COLOR_FMT = { hex: (c) => c.hex, rgb: (c) => `rgb(${c.rgb.join(" ")})`, hsl: (c) => hsl(c.rgb), oklch: (c) => oklch(c.rgb), cmyk: (c) => cmyk(c.rgb) };
+const { cfmt = "hex" } = await chrome.storage.local.get("cfmt");
+$("#cfmt").value = cfmt;
+$("#cfmt").onchange = () => chrome.storage.local.set({ cfmt: $("#cfmt").value });
+const asColor = (c) => COLOR_FMT[$("#cfmt").value](c);
 
 const tab = await activeTab();
 const web = isWebUrl(tab?.url);
@@ -54,7 +94,10 @@ async function loadCharte() {
       <i style="background:${c.hex}"></i><b>${c.hex}</b>
       <span>${role[c.hex] ? `<span class="role">${role[c.hex]}</span> · ` : ""}${c.pct < 1 ? "<1" : Math.round(c.pct)} %</span>
     </button>`).join("");
-  $("#swatches").onclick = (e) => { const b = e.target.closest(".sw"); if (b) copy(b.dataset.hex, b); };
+  $("#swatches").onclick = (e) => {
+    const b = e.target.closest(".sw");
+    if (b) copy(asColor(palette.find((c) => c.hex === b.dataset.hex)), b);
+  };
 
   $("#varsBox").hidden = !brand.vars.length;
   $("#vars").innerHTML = brand.vars.map((v) => `<button class="var" data-v="${esc(v.name)}: ${esc(v.value)};" title="${esc(v.value)}"><i style="background:${hex(v.rgb)}"></i>${esc(v.name)}</button>`).join("");
@@ -85,6 +128,22 @@ $("#xCss").onclick = () => {
   const lines = palette.map((c, i) => `  --couleur-${i + 1}: ${c.hex};${role[c.hex] ? ` /* ${role[c.hex]} */` : ""}`);
   brand.fonts.slice(0, 3).forEach((f, i) => lines.push(`  --police-${i + 1}: ${f.stack};`));
   save(new Blob([`/* Charte extraite de ${host} par Aruzen Design Kit */\n:root {\n${lines.join("\n")}\n}\n`], { type: "text/css" }), base() + ".css");
+};
+$("#xScss").onclick = () => {
+  if (!palette.length) return;
+  const role = roles(palette);
+  const lines = palette.map((c, i) => `$couleur-${i + 1}: ${c.hex};${role[c.hex] ? ` // ${role[c.hex]}` : ""}`);
+  brand.fonts.slice(0, 3).forEach((f, i) => lines.push(`$police-${i + 1}: ${f.stack};`));
+  save(new Blob([`// Charte extraite de ${host} par Aruzen Design Kit\n${lines.join("\n")}\n`], { type: "text/x-scss" }), base() + ".scss");
+};
+$("#xTw").onclick = () => {
+  if (!palette.length) return;
+  const role = roles(palette);
+  const key = (c, i) => (role[c.hex] ? role[c.hex].toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : "couleur-" + (i + 1));
+  const colors = Object.fromEntries(palette.map((c, i) => [key(c, i), c.hex]));
+  const fonts = Object.fromEntries(brand.fonts.slice(0, 3).map((f, i) => ["police-" + (i + 1), f.stack.split(",").map((x) => x.trim())]));
+  const js = `// Charte extraite de ${host} par Aruzen Design Kit\n/** @type {import('tailwindcss').Config} */\nexport default {\n  theme: {\n    extend: ${JSON.stringify({ colors, fontFamily: fonts }, null, 2).replace(/\n/g, "\n    ")},\n  },\n};\n`;
+  save(new Blob([js], { type: "text/javascript" }), base() + ".tailwind.config.js");
 };
 $("#xJson").onclick = () => {
   if (!palette.length) return;

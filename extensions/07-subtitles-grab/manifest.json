@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Aruzen · Sous-titres & Miniatures",
-  "version": "1.0.0",
-  "description": "Télécharge les sous-titres (SRT, toutes langues, y compris automatiques) et la miniature HD d'une vidéo.",
+  "version": "2.0.0",
+  "description": "Sous-titres en SRT, VTT, ASS, LRC ou transcription texte, et miniatures HD en JPG, PNG ou WEBP.",
   "icons": {
     "16": "icons/16.png",
     "48": "icons/48.png",

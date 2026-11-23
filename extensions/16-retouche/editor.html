@@ -20,6 +20,8 @@
     <button id="compare" class="ghost" title="Maintenir pour voir l'original">Avant / après</button>
     <button id="apply" class="primary" title="Entrée" disabled>Effacer la zone</button>
     <select id="fmt" aria-label="Format"><option value="png">PNG</option><option value="jpeg">JPG</option><option value="webp">WebP</option></select>
+    <select id="q" aria-label="Qualité" title="Qualité JPG / WebP"><option value="0.95">Haute</option><option value="0.85">Moyenne</option><option value="0.7">Légère</option></select>
+    <select id="outSize" aria-label="Taille d'export" title="Taille d'export"><option value="0">Taille d'origine</option><option value="3840">4K max</option><option value="2048">2048 px max</option><option value="1080">1080 px max</option></select>
     <button id="save" disabled>Enregistrer</button>
   </header>
   <div id="status" class="status">Ouvre une image : glisse-la ici, colle-la (⌘V), <label class="link">choisis un fichier<input id="file" type="file" accept="image/*" hidden></label>, ou fais un clic droit sur une image du web › « Retoucher cette image ».</div>

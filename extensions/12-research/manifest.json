@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Aruzen · Research",
-  "version": "1.0.0",
-  "description": "Surligneur et carnet de recherche (citations, notes, export Markdown), sessions d'onglets par projet, libération de mémoire et veille de pages.",
+  "version": "2.0.0",
+  "description": "Surligneur et carnet de recherche (citations, notes, export Markdown, HTML, TXT, CSV ou JSON), sessions d'onglets par projet, libération de mémoire et veille de pages.",
   "icons": {
     "16": "icons/16.png",
     "48": "icons/48.png",

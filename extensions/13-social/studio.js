@@ -224,8 +224,12 @@ async function crop(net, ratio) {
   const ctx = c.getContext("2d");
   ctx.imageSmoothingQuality = "high";
   ctx.drawImage(el, sx, sy, sw, sh, 0, 0, w, h);
-  return c.convertToBlob({ type: "image/jpeg", quality: 0.92 });
+  const fmt = $("#xfmt").value;
+  if (fmt === "jpeg") { ctx.globalCompositeOperation = "destination-over"; ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, w, h); }
+  return c.convertToBlob({ type: "image/" + fmt, quality: 0.92 });
 }
+chrome.storage.local.get("xfmt").then(({ xfmt }) => { if (xfmt) $("#xfmt").value = xfmt; });
+$("#xfmt").onchange = () => chrome.storage.local.set({ xfmt: $("#xfmt").value });
 $("#export").onclick = async () => {
   const folder = "Web Media/Social/" + ((draft.campaign || "").replace(/[\\/:*?"<>|]+/g, " ").trim() || new Date().toISOString().slice(0, 10)) + "/";
   const nets = activeNets();
@@ -235,7 +239,8 @@ $("#export").onclick = async () => {
       const ratio = ratioOf(net);
       const [w, h] = networks[net].ratios[ratio];
       const url = URL.createObjectURL(await crop(net, ratio));
-      await chrome.downloads.download({ url, filename: `${folder}${networks[net].name} ${ratio.replace(":", "x")} ${w}x${h}.jpg`, conflictAction: "uniquify" });
+      const ext = $("#xfmt").value === "jpeg" ? "jpg" : $("#xfmt").value;
+      await chrome.downloads.download({ url, filename: `${folder}${networks[net].name} ${ratio.replace(":", "x")} ${w}x${h}.${ext}`, conflictAction: "uniquify" });
       n++;
     }
   }

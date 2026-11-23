@@ -2,7 +2,13 @@
 
 # Enregistreur d'onglet
 
-**Enregistre l'image et le son d'un onglet en MP4.** · version 1.0.0 · catégorie : Vidéo & audio
+**Enregistre l'image et le son d'un onglet en MP4.** · version 2.0.0 · catégorie : Vidéo & audio
+
+## Nouveau dans la 2.0
+
+- Format MP4 (H.264) ou WEBM (VP9)
+- Définition jusqu'à la 4K et 60 images/s
+- Pause et reprise pendant l'enregistrement
 
 ## Fonctionnalités
 

@@ -173,12 +173,35 @@ $("#compare").onpointerdown = () => showOriginal(true);
 $("#compare").onpointerup = $("#compare").onpointerleave = () => showOriginal(false);
 
 // ---------- enregistrement ----------
+for (const id of ["fmt", "q", "outSize"]) {
+  chrome.storage.local.get("x_" + id).then((o) => { if (o["x_" + id]) $("#" + id).value = o["x_" + id]; syncQ(); });
+  $("#" + id).addEventListener("change", () => { chrome.storage.local.set({ ["x_" + id]: $("#" + id).value }); syncQ(); });
+}
+function syncQ() { $("#q").hidden = $("#fmt").value === "png"; }
+
 $("#save").onclick = async () => {
-  const fmt = $("#fmt").value;
-  const blob = await new Promise((r) => img.toBlob(r, "image/" + fmt, 0.95));
+  const fmt = $("#fmt").value, max = Number($("#outSize").value);
+  // Réduction éventuelle (le côté le plus long ne dépasse pas « max »).
+  let src = img;
+  if (max && Math.max(W, H) > max) {
+    const k = max / Math.max(W, H);
+    src = document.createElement("canvas");
+    src.width = Math.round(W * k); src.height = Math.round(H * k);
+    const g = src.getContext("2d");
+    g.imageSmoothingQuality = "high";
+    g.drawImage(img, 0, 0, src.width, src.height);
+  }
+  if (fmt === "jpeg") { // pas de transparence en JPG : fond blanc
+    const flat = document.createElement("canvas");
+    flat.width = src.width; flat.height = src.height;
+    const g = flat.getContext("2d");
+    g.fillStyle = "#fff"; g.fillRect(0, 0, flat.width, flat.height); g.drawImage(src, 0, 0);
+    src = flat;
+  }
+  const blob = await new Promise((r) => src.toBlob(r, "image/" + fmt, Number($("#q").value)));
   const url = URL.createObjectURL(blob);
   await chrome.downloads.download({ url, filename: `Web Media/Retouches/${name} retouche.${fmt === "jpeg" ? "jpg" : fmt}`, conflictAction: "uniquify" });
-  status("Enregistrée dans Téléchargements › Web Media › Retouches.");
+  status(`Enregistrée (${src.width} × ${src.height}, ${fmt === "jpeg" ? "JPG" : fmt.toUpperCase()}) dans Téléchargements › Web Media › Retouches.`);
 };
 
 // ---------- raccourcis ----------

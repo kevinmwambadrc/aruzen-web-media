@@ -105,10 +105,37 @@ $("#csv").onclick = async () => {
     const t = (x) => new Date(x).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
     rows.push([iso(new Date(e.start)), e.client, e.project, e.note, t(e.start), t(e.end), num(h), num(r.rate || 0), num(h * (r.rate || 0)), r.currency]);
   }
-  const csv = "﻿" + rows.map((r) => r.map(cell).join(";")).join("\r\n");
-  const url = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
-  chrome.downloads.download({ url, filename: `Web Media/Temps/Feuille de temps ${$("#period").selectedOptions[0].text} ${today()}.csv`, conflictAction: "uniquify" });
+  const fmt = $("#tfmt").value;
+  chrome.storage.local.set({ tfmt: fmt });
+  const period = $("#period").selectedOptions[0].text;
+  const name = `Web Media/Temps/Feuille de temps ${period} ${today()}`;
+  const save = (text, ext, type) => chrome.downloads.download({
+    url: URL.createObjectURL(new Blob([text], { type })), filename: `${name}.${ext}`, conflictAction: "uniquify" });
+  if (fmt === "json") {
+    const head = rows[0];
+    return save(JSON.stringify(rows.slice(1).map((r) => Object.fromEntries(r.map((v, i) => [head[i], v]))), null, 2), "json", "application/json");
+  }
+  const total = list.reduce((sum, e) => sum + (e.end - e.start) / 3600000, 0);
+  if (fmt === "md") {
+    const line = (r) => "| " + r.map((v) => String(v ?? "").replace(/\|/g, "/")).join(" | ") + " |";
+    const md = [`# Feuille de temps — ${period}`, "", line(rows[0]), line(rows[0].map(() => "---")), ...rows.slice(1).map(line), "", `**Total : ${num(total)} h**`].join("\n");
+    return save(md, "md", "text/markdown");
+  }
+  if (fmt === "html") {
+    const e = (v) => String(v ?? "").replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c]);
+    const html = `<!doctype html><html lang="fr"><meta charset="utf-8"><title>Feuille de temps ${e(period)}</title><style>
+body{font:13px/1.45 -apple-system,system-ui,sans-serif;margin:32px;color:#1d1d1f}h1{font-size:22px;margin:0 0 4px}p{color:#777;margin:0 0 18px}
+table{border-collapse:collapse;width:100%}th,td{padding:6px 8px;border-bottom:1px solid #e5e5e5;text-align:left}th{background:#f5f5f7}
+td:nth-child(n+7){text-align:right}tfoot td{font-weight:700;border-top:2px solid #1d1d1f}@media print{body{margin:0}}</style>
+<h1>Feuille de temps — ${e(period)}</h1><p>Exportée le ${new Date().toLocaleDateString("fr-FR")}</p>
+<table><thead><tr>${rows[0].map((h) => `<th>${e(h)}</th>`).join("")}</tr></thead><tbody>${
+      rows.slice(1).map((r) => `<tr>${r.map((v) => `<td>${e(v)}</td>`).join("")}</tr>`).join("")}</tbody>
+<tfoot><tr><td colspan="6">Total</td><td>${num(total)}</td><td colspan="3"></td></tr></tfoot></table></html>`;
+    return save(html, "html", "text/html");
+  }
+  save("\ufeff" + rows.map((r) => r.map(cell).join(";")).join("\r\n"), "csv", "text/csv");
 };
+chrome.storage.local.get("tfmt").then(({ tfmt }) => { if (tfmt) $("#tfmt").value = tfmt; });
 
 // ---------- Prompts ----------
 let plist = await prompts();

@@ -14,7 +14,8 @@
   </nav>
 
   <main id="charte" class="pane">
-    <h2>Couleurs <span class="mut small">(clic = copier)</span></h2>
+    <div class="row"><h2 class="grow">Couleurs <span class="mut small">(clic = copier)</span></h2>
+      <label class="mut small">en <select id="cfmt"><option value="hex">HEX</option><option value="rgb">RGB</option><option value="hsl">HSL</option><option value="oklch">OKLCH</option><option value="cmyk">CMJN (approx.)</option></select></label></div>
     <div id="swatches" class="swatches"><div class="empty">Analyse de la page…</div></div>
     <div id="varsBox" hidden><h2>Variables CSS du site</h2><div id="vars" class="vars"></div></div>
     <h2>Polices</h2>
@@ -24,6 +25,8 @@
       <button id="xAse" class="primary">Nuancier .ase</button>
       <button id="xSvg">Planche .svg</button>
       <button id="xCss">Variables CSS</button>
+      <button id="xScss">SCSS</button>
+      <button id="xTw">Tailwind</button>
       <button id="xJson">JSON</button>
     </div>
     <div class="mut small">Le .ase s'ouvre dans Illustrator : Nuancier › Ouvrir une bibliothèque de nuances › Autre bibliothèque.</div>

@@ -6,7 +6,7 @@ Modes :
   --enqueue '<json>'        crée une tâche (widget)
   --worker <id>             exécute yt-dlp pour une tâche
   --jobs                    liste des tâches en JSON
-  --cancel <id> | --clear | --open <type> | --reveal <id>
+  --cancel <id> | --retry <id> | --clear | --open <type> | --reveal <id>
   --settings ['<json>']     lit ou modifie les réglages
 """
 import fcntl
@@ -23,11 +23,12 @@ import urllib.parse
 import urllib.request
 import uuid
 
-VERSION = "1.0.0"
+VERSION = "2.0.0"
 HOME = os.path.expanduser("~")
 APP_DIR = os.path.join(HOME, "Library", "Application Support", "AruzenWebMedia")
 JOBS_DIR = os.path.join(APP_DIR, "jobs")
 LOGS_DIR = os.path.join(APP_DIR, "logs")
+WORK_DIR = os.path.join(APP_DIR, "work")   # un dossier par tâche : aucun conflit de noms entre tâches
 SETTINGS_FILE = os.path.join(APP_DIR, "settings.json")
 OUT_ROOT = os.path.join(HOME, "Downloads", "Web Media")
 FOLDERS = {
@@ -43,7 +44,33 @@ DEFAULT_SETTINGS = {
     "low_priority": True,    # yt-dlp / ffmpeg en priorité basse (cœurs économes)
     "ffmpeg_threads": 2,     # limite CPU des conversions
     "fragments": 4,          # fragments HLS/DASH téléchargés en parallèle
+    "cookies_browser": "",   # comptes connectés : chrome, edge, safari, firefox, brave (v2)
 }
+COOKIE_BROWSERS = ("chrome", "edge", "safari", "firefox", "brave")
+
+
+def cookie_args(settings):
+    b = settings.get("cookies_browser", "")
+    return ["--cookies-from-browser", b] if b in COOKIE_BROWSERS else []
+
+
+def friendly(err):
+    """Message clair pour les erreurs les plus courantes de yt-dlp."""
+    e = err or ""
+    if re.search(r"\b(log ?in|logged[- ]in|--cookies|sign in to|private video|members[- ]only|age[- ]restricted|confirm your age)\b", e, re.I):
+        return ("Contenu réservé aux comptes connectés. Active « Comptes connectés » "
+                "dans Widget vidéo › Performance (navigateur où tu es connecté), puis ↻.")
+    if "HTTP Error 403" in e:
+        return "Accès refusé par le site (403). Mets yt-dlp à jour : brew upgrade yt-dlp, puis ↻."
+    return e
+# Formats de sortie proposés par les extensions.
+VIDEO_FORMATS = ("mp4", "mkv", "webm", "mov", "avi", "gif")
+AUDIO_FORMATS = ("mp3", "m4a", "aac", "opus", "flac", "wav")
+SUB_FORMATS = ("srt", "vtt", "ass", "lrc", "txt")
+THUMB_FORMATS = ("jpg", "png", "webp")
+TIME_RE = re.compile(r"^\d{1,3}(:\d{1,2}){0,2}(\.\d+)?$")
+GIF_FILTER = ("-vf fps=12,scale=%d:-2:flags=lanczos,split[a][b];"
+              "[a]palettegen=stats_mode=diff[p];[b][p]paletteuse=dither=bayer:bayer_scale=4 -an -sn -dn -loop 0")
 ANSI = re.compile(r"\x1b\[[0-9;]*m")
 PATH_ENV = "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
@@ -59,7 +86,7 @@ def find_bin(name):
 YTDLP = find_bin("yt-dlp")
 FFMPEG = find_bin("ffmpeg")
 
-for d in (JOBS_DIR, LOGS_DIR):
+for d in (JOBS_DIR, LOGS_DIR, WORK_DIR):
     os.makedirs(d, exist_ok=True)
 
 
@@ -81,8 +108,16 @@ def save_settings(changes):
         if k in DEFAULT_SETTINGS:
             s[k] = type(DEFAULT_SETTINGS[k])(v)
     s["max_parallel"] = max(1, min(6, s["max_parallel"]))
+    if s["cookies_browser"] not in COOKIE_BROWSERS:
+        s["cookies_browser"] = ""
     write_json(SETTINGS_FILE, s)
     return s
+
+
+def clean_time(t):
+    """« 1:30 », « 90 » ou « 0:01:30 » ; vide si invalide."""
+    t = str(t or "").strip().replace(",", ".")
+    return t if TIME_RE.match(t) else ""
 
 
 def write_json(path, data):
@@ -183,6 +218,10 @@ def create_job(req):
         return {"ok": False, "error": "Lien invalide"}
     if kind not in FOLDERS:
         return {"ok": False, "error": "Type inconnu : %s" % kind}
+    if req.get("container", "mp4") not in VIDEO_FORMATS:
+        return {"ok": False, "error": "Format vidéo inconnu : %s" % req.get("container")}
+    if req.get("audio_format", "mp3") not in AUDIO_FORMATS:
+        return {"ok": False, "error": "Format audio inconnu : %s" % req.get("audio_format")}
     if not YTDLP:
         return {"ok": False, "error": "yt-dlp introuvable (brew install yt-dlp)"}
     now = time.time()
@@ -198,6 +237,13 @@ def create_job(req):
         "items": str(req.get("items", "")).strip(),  # ex. 1-10,15
         "sub_langs": req.get("sub_langs") or "fr,en",
         "referer": req.get("referer", ""),
+        "vcodec": req.get("vcodec", "compat"),       # compat (H.264) ou best
+        "audio_quality": str(req.get("audio_quality", "0")),
+        "start": clean_time(req.get("start")),        # extrait : début
+        "end": clean_time(req.get("end")),            # extrait : fin
+        "embed_subs": bool(req.get("embed_subs")),
+        "sub_format": req.get("sub_format", "srt"),
+        "thumb_format": req.get("thumb_format", "jpg"),
         "status": "queued",
         "percent": 0,
         "speed": "",
@@ -230,6 +276,7 @@ def cancel_job(job_id):
 def clear_jobs():
     for j in list_jobs(limit=None):
         if j["status"] in ("done", "error", "cancelled"):
+            shutil.rmtree(work_dir(j), ignore_errors=True)
             for p in (job_path(j["id"]), os.path.join(LOGS_DIR, j["id"] + ".log")):
                 try:
                     os.remove(p)
@@ -304,10 +351,27 @@ def pinterest_videos(url):
 
 # ---------- yt-dlp ----------
 
+def clip_label(job):
+    """« (extrait 0m20s-0m23s) » : deux extraits d'une même vidéo ne portent pas le même nom."""
+    def fmt(t):
+        parts = [p for p in t.split(":")]
+        units = ["h", "m", "s"][-len(parts):]
+        return "".join(p + u for p, u in zip(parts, units))
+    if not (job.get("start") or job.get("end")):
+        return ""
+    return " (extrait %s-%s)" % (fmt(job.get("start") or "0"), fmt(job["end"]) if job.get("end") else "fin")
+
+
+def work_dir(job):
+    return os.path.join(WORK_DIR, re.sub(r"[^\w-]", "", job["id"]))
+
+
 def build_args(job, settings, url=None, name=None):
     out = os.path.join(OUT_ROOT, FOLDERS[job["kind"]])
     os.makedirs(out, exist_ok=True)
-    name = name or "%(title).150B [%(id)s].%(ext)s"
+    work = work_dir(job)
+    os.makedirs(work, exist_ok=True)
+    name = name or "%(title).150B [%(id)s]" + clip_label(job).replace("%", "%%") + ".%(ext)s"
     args = []
     if settings["low_priority"]:
         args += ["/usr/sbin/taskpolicy", "-c", "utility", "/usr/bin/nice", "-n", "10"]
@@ -321,47 +385,89 @@ def build_args(job, settings, url=None, name=None):
         "--print", "after_move:[F]%(filepath)s",
         "--postprocessor-args", "ffmpeg:-threads %d" % settings["ffmpeg_threads"],
     ]
+    args += ["-P", work]   # chemins relatifs : --trim-filenames ne coupe que le nom
     if FFMPEG:
         args += ["--ffmpeg-location", os.path.dirname(FFMPEG)]
     if job.get("referer"):
         args += ["--referer", job["referer"]]
+    args += cookie_args(settings)
 
     q = job.get("quality", "best")
     kind = job["kind"]
     media = job.get("media") if kind == "playlist" else kind
 
+    def section_args():
+        if not (job.get("start") or job.get("end")):
+            return []
+        return ["--download-sections", "*%s-%s" % (job.get("start") or "0", job.get("end") or "inf"),
+                "--force-keyframes-at-cuts"]
+
     def video_args():
-        mp4 = job.get("container", "mp4") == "mp4"
+        fmt = job.get("container", "mp4")
+        compat = job.get("vcodec", "compat") != "best"
+        h264 = ",vcodec:h264,acodec:aac"
+        a = []
+        if fmt == "gif":
+            # Animation légère : image seule, 480 px max, palette optimisée.
+            cap = min(int(q), 480) if q.isdigit() else 480
+            a += ["-f", "bv*[height<=%d]/b[height<=%d]/bv*/b" % (cap, cap), "-S", "res:%d" % cap,
+                  "--recode-video", "gif", "--postprocessor-args",
+                  "VideoConvertor:-threads %d %s" % (settings["ffmpeg_threads"], GIF_FILTER % cap)]
+            return a + section_args()
         res = "res:%s" % q if q.isdigit() else "res"
-        sort = res + (",vcodec:h264,acodec:aac" if mp4 else "")
-        return ["-S", sort, "--merge-output-format", "mp4" if mp4 else "mkv", "--embed-metadata"]
+        if fmt == "mp4":
+            a += ["-S", res + (h264 if compat else ",ext:mp4:m4a"),
+                  "--merge-output-format", "mp4/mkv", "--remux-video", "mp4"]
+        elif fmt == "mkv":
+            a += ["-S", res + (h264 if compat else ""), "--merge-output-format", "mkv", "--remux-video", "mkv"]
+        elif fmt == "webm":
+            # VP9/AV1 + Opus choisis en priorité : conversion seulement si le site n'en propose pas.
+            a += ["-S", res + ",vcodec:vp9,acodec:opus", "--merge-output-format", "webm/mkv",
+                  "--recode-video", "webm", "--postprocessor-args",
+                  "VideoConvertor:-threads %d -c:v libvpx-vp9 -deadline realtime -cpu-used 8 -row-mt 1 -b:v 0 -crf 32 -c:a libopus"
+                  % settings["ffmpeg_threads"]]
+        elif fmt == "mov":
+            a += ["-S", res + h264, "--merge-output-format", "mp4/mkv", "--remux-video", "mov"]
+        elif fmt == "avi":
+            a += ["-S", res + h264, "--merge-output-format", "mp4/mkv", "--remux-video", "avi"]
+        a.append("--embed-metadata")
+        if job.get("embed_subs") and fmt in ("mp4", "mkv", "webm", "mov"):
+            a += ["--embed-subs", "--write-subs", "--write-auto-subs", "--sub-langs", job.get("sub_langs") or "fr,en"]
+        return a + section_args()
 
     def audio_args():
         fmt = job.get("audio_format", "mp3")
-        a = ["-f", "ba/b", "-x", "--audio-format", fmt, "--audio-quality", "0", "--embed-metadata"]
-        if fmt in ("mp3", "m4a"):
+        aq = job.get("audio_quality", "0")
+        if not re.match(r"^(\d|\d{2,3}K)$", aq) or fmt in ("flac", "wav"):
+            aq = "0"
+        a = ["-f", "ba/b", "-x", "--audio-format", fmt, "--audio-quality", aq, "--embed-metadata"]
+        if fmt in ("mp3", "m4a", "flac", "opus"):
             a.append("--embed-thumbnail")
-        return a
+        return a + section_args()
 
     if kind == "playlist":
         args += ["--yes-playlist", "-o",
-                 os.path.join(out, "%(playlist_title,uploader,id)s", "%(playlist_index)03d - %(title).120B.%(ext)s")]
+                 os.path.join("%(playlist_title,uploader,id)s", "%(playlist_index)03d - %(title).120B.%(ext)s")]
         if job.get("items"):
             args += ["--playlist-items", job["items"]]
         args += audio_args() if media == "audio" else video_args()
     else:
-        args += ["--no-playlist", "-o", os.path.join(out, name)]
+        args += ["--no-playlist", "-o", name]
         if kind == "video":
             args += video_args()
         elif kind == "audio":
             args += audio_args()
         elif kind == "subs":
+            sf = job.get("sub_format", "srt")
             args += ["--skip-download", "--write-subs", "--write-auto-subs",
-                     "--sub-langs", job.get("sub_langs") or "fr,en", "--convert-subs", "srt"]
+                     "--sub-langs", job.get("sub_langs") or "fr,en",
+                     "--convert-subs", "srt" if sf in ("txt", "srt") or sf not in SUB_FORMATS else sf]
         elif kind == "thumb":
-            args += ["--skip-download", "--write-thumbnail", "--convert-thumbnails", "jpg"]
+            tf = job.get("thumb_format", "jpg")
+            args += ["--skip-download", "--write-thumbnail",
+                     "--convert-thumbnails", tf if tf in THUMB_FORMATS else "jpg"]
         elif kind == "file":
-            args += ["-o", os.path.join(out, "%(title).150B.%(ext)s")]
+            args += ["-o", "%(title).150B.%(ext)s"]
     args.append(url or job["url"])
     return args, out
 
@@ -371,8 +477,9 @@ def run_worker(job_id):
     if not job or job["status"] == "cancelled":
         return
     settings = load_settings()
+    shutil.rmtree(work_dir(job), ignore_errors=True)   # relance : on repart d'un dossier propre
     args, out = build_args(job, settings)
-    job.update(status="running", pid=os.getpid(), started=time.time(), updated=time.time(), folder=out)
+    job.update(status="running", pid=os.getpid(), started=time.time(), updated=time.time(), folder=out, files=[])
     save_job(job)
     rc, last_error = stream(job, args)
     # Pinterest : si yt-dlp échoue, on télécharge les vidéos lues dans la fiche de l'épingle.
@@ -396,13 +503,81 @@ def run_worker(job_id):
             last_error = pinterest_hint(job["url"]) or last_error
     current = load_job(job_id) or job
     if current.get("status") == "cancelled":
+        shutil.rmtree(work_dir(job), ignore_errors=True)
         return
+    work = work_dir(job)
+    if rc == 0 and job["kind"] == "subs" and job.get("sub_format") == "txt":
+        srt_to_txt(work, 0)
+    job["files"] = move_outputs(work, out)
     job["updated"] = time.time()
     if rc == 0 or (job["files"] and not last_error):
         job.update(status="done", percent=100, speed="", eta="", item="")
     else:
-        job.update(status="error", error=last_error or "yt-dlp a échoué (code %d)" % rc)
+        job.update(status="error", error=friendly(last_error) or "yt-dlp a échoué (code %d)" % rc)
     save_job(job)
+
+
+def unique_path(path):
+    """Ne remplace jamais un fichier existant : « nom (2).ext », « nom (3).ext »…"""
+    if not os.path.exists(path):
+        return path
+    base, ext = os.path.splitext(path)
+    n = 2
+    while os.path.exists("%s (%d)%s" % (base, n, ext)):
+        n += 1
+    return "%s (%d)%s" % (base, n, ext)
+
+
+def move_outputs(work, out):
+    """Range les fichiers terminés de la tâche dans le dossier Web Media, puis efface le dossier de travail."""
+    moved = []
+    for root, _dirs, files in os.walk(work):
+        for f in sorted(files):
+            if f.endswith((".part", ".ytdl", ".tmp")) or ".part-Frag" in f or ".temp." in f or f.startswith("."):
+                continue
+            src = os.path.join(root, f)
+            dest = unique_path(os.path.join(out, os.path.relpath(src, work)))
+            os.makedirs(os.path.dirname(dest), exist_ok=True)
+            shutil.move(src, dest)
+            moved.append(dest)
+    shutil.rmtree(work, ignore_errors=True)
+    return moved
+
+
+def srt_to_txt(folder, since):
+    """Transforme les .srt écrits par la tâche en transcription texte (sans horodatage ni doublons)."""
+    made = []
+    for name in sorted(os.listdir(folder)):
+        path = os.path.join(folder, name)
+        if not name.endswith(".srt") or os.path.getmtime(path) < since - 2:
+            continue
+        lines, prev = [], ""
+        with open(path, encoding="utf-8", errors="replace") as f:
+            for line in f:
+                line = re.sub(r"<[^>]+>", "", line).strip()
+                if not line or line.isdigit() or "-->" in line or line == prev:
+                    continue
+                lines.append(line)
+                prev = line
+        txt = path[:-4] + ".txt"
+        with open(txt, "w", encoding="utf-8") as f:
+            f.write("\n".join(lines) + "\n")
+        os.remove(path)
+        made.append(txt)
+    return made
+
+
+def retry_job(job_id):
+    job = load_job(job_id)
+    if not job:
+        return {"ok": False, "error": "Tâche introuvable"}
+    if job["status"] not in ("error", "cancelled"):
+        return {"ok": False, "error": "Seules les tâches en erreur ou annulées se relancent"}
+    job.update(status="queued", percent=0, speed="", eta="", item="", files=[], error="",
+               created=time.time(), updated=time.time())
+    save_job(job)
+    schedule()
+    return {"ok": True}
 
 
 def stream(job, args, keep_title=False):
@@ -443,7 +618,7 @@ def probe(req):
     if not YTDLP:
         return {"ok": False, "error": "yt-dlp introuvable"}
     args = [YTDLP, "-J", "--no-warnings", "--flat-playlist",
-            "--yes-playlist" if req.get("playlist") else "--no-playlist", url]
+            "--yes-playlist" if req.get("playlist") else "--no-playlist"] + cookie_args(load_settings()) + [url]
     try:
         r = subprocess.run(args, capture_output=True, text=True, timeout=60,
                            env=dict(os.environ, PATH=PATH_ENV))
@@ -458,7 +633,7 @@ def probe(req):
                     "playlist": False, "duration": None, "heights": [], "subtitles": [], "auto_subs": []}
         err = ANSI.sub("", r.stderr).strip().splitlines()
         err = (err[-1] if err else "Lien non pris en charge").replace("ERROR: ", "")
-        return {"ok": False, "error": pinterest_hint(url) or err}
+        return {"ok": False, "error": pinterest_hint(url) or friendly(err)}
     info = json.loads(r.stdout)
     thumb = info.get("thumbnail") or ((info.get("thumbnails") or [{}])[-1].get("url"))
     res = {"ok": True, "title": info.get("title"), "uploader": info.get("uploader") or info.get("channel"),
@@ -468,9 +643,19 @@ def probe(req):
         res.update(playlist=True, count=info.get("playlist_count") or len(entries),
                    entries=[{"title": e.get("title"), "duration": e.get("duration")} for e in entries[:200]])
     else:
-        heights = sorted({f["height"] for f in info.get("formats", [])
+        fmts = info.get("formats") or []
+        size = lambda f: f.get("filesize") or f.get("filesize_approx") or 0
+        audio = max([size(f) for f in fmts if f.get("vcodec") == "none" and f.get("acodec") not in (None, "none")] or [0])
+        sizes = {}
+        for f in fmts:
+            h = f.get("height")
+            if h and f.get("vcodec") not in (None, "none") and size(f):
+                total = size(f) + (audio if f.get("acodec") in (None, "none") else 0)
+                sizes[str(h)] = max(sizes.get(str(h), 0), total)
+        heights = sorted({f["height"] for f in fmts
                           if f.get("height") and f.get("vcodec") not in (None, "none")}, reverse=True)
-        res.update(playlist=False, duration=info.get("duration"), heights=heights,
+        res.update(playlist=False, duration=info.get("duration"), heights=heights, sizes=sizes,
+                   audio_size=audio,
                    subtitles=sorted(info.get("subtitles", {}).keys()),
                    auto_subs=sorted(k for k in info.get("automatic_captions", {}) if "-" not in k)[:40])
     return res
@@ -499,6 +684,8 @@ def handle(msg):
         return {"ok": True, "jobs": list_jobs(msg.get("limit", 40))}
     if action == "cancel":
         return cancel_job(msg.get("id", ""))
+    if action == "retry":
+        return retry_job(msg.get("id", ""))
     if action == "clear":
         return clear_jobs()
     if action == "open_folder":
@@ -546,6 +733,7 @@ def main():
         "--enqueue": lambda: create_job(json.loads(a[1])),
         "--jobs": lambda: {"ok": True, "jobs": (schedule(), list_jobs())[1]},
         "--cancel": lambda: cancel_job(a[1]),
+        "--retry": lambda: retry_job(a[1]),
         "--clear": clear_jobs,
         "--open": lambda: handle({"action": "open_folder", "kind": a[1] if len(a) > 1 else ""}),
         "--reveal": lambda: handle({"action": "reveal", "id": a[1]}),

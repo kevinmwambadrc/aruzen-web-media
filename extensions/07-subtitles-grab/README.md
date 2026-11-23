@@ -2,7 +2,14 @@
 
 # Sous-titres & Miniatures
 
-**Télécharge les sous-titres d'une vidéo en SRT, et sa miniature HD.** · version 1.0.0 · catégorie : Vidéo & audio
+**Télécharge les sous-titres d'une vidéo en SRT, et sa miniature HD.** · version 2.0.0 · catégorie : Vidéo & audio
+
+## Nouveau dans la 2.0
+
+- Sous-titres en SRT, VTT, ASS, LRC ou TXT (transcription sans horodatage)
+- Miniature HD en JPG, PNG ou WEBP
+- Bouton ↻ pour relancer un téléchargement en erreur, messages d'erreur clairs
+- Chaque tâche travaille dans son propre dossier : deux téléchargements de la même vidéo ne s'écrasent plus (« nom (2) »)
 
 ## Fonctionnalités
 

@@ -29,7 +29,8 @@
       <select id="period"><option value="week">Cette semaine</option><option value="month" selected>Ce mois-ci</option><option value="last">Mois dernier</option><option value="all">Tout</option></select>
       <select id="eClient"></select>
       <span class="grow"></span>
-      <button id="csv" class="primary">Exporter CSV (Excel)</button>
+      <select id="tfmt" aria-label="Format d'export"><option value="csv">CSV (Excel)</option><option value="md">Markdown</option><option value="html">Page imprimable (.html)</option><option value="json">JSON</option></select>
+      <button id="csv" class="primary">Exporter</button>
     </div>
     <div id="summary" class="cards"></div>
     <details class="add"><summary>＋ Ajouter un temps oublié</summary>

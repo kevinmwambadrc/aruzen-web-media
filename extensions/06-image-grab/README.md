@@ -2,7 +2,13 @@
 
 # Image Grab
 
-**Affiche toutes les images d'une page et télécharge la sélection en un clic.** · version 1.0.0 · catégorie : Images & documents
+**Affiche toutes les images d'une page et télécharge la sélection en un clic.** · version 2.0.0 · catégorie : Images & documents
+
+## Nouveau dans la 2.0
+
+- Filtre par type d'image (JPG, PNG, WEBP, GIF, SVG, AVIF…)
+- Conversion à l'enregistrement en PNG, JPG ou WEBP, qualité réglable
+- Copie des liens cochés
 
 ## Fonctionnalités
 
@@ -29,6 +35,7 @@ Clique sur l'icône, filtre par taille, coche, puis « Télécharger la sélecti
 | `downloads` | Enregistre les fichiers dans Téléchargements › Web Media. |
 | `scripting` | Injecte un script d'analyse ou d'insertion dans la page, seulement à ta demande. |
 | `activeTab` | Accède à l'onglet actif seulement quand tu cliques sur l'icône, un raccourci ou le menu. |
+| `<all_urls>` | Relit les images que tu as cochées pour les convertir en PNG, JPG ou WEBP. Rien n'est lu sans ton clic. |
 | `storage` | Garde tes réglages et ton historique dans le stockage local du navigateur. |
 
 ## Confidentialité

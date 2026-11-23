@@ -54,8 +54,12 @@ chrome.runtime.onMessage.addListener((m, _s, reply) => {
   if (m.cmd === "grab") {
     const it = m.item;
     if (it.kind === "HLS" || it.kind === "DASH") {
-      // Les flux se reconstituent avec yt-dlp + ffmpeg.
-      enqueue({ kind: "file", url: it.url, referer: m.pageUrl }).then(reply);
+      // Les flux se reconstituent avec yt-dlp + ffmpeg, au format choisi.
+      const f = m.fmt || "mp4";
+      const req = f === "mp3" || f === "m4a"
+        ? { kind: "audio", url: it.url, referer: m.pageUrl, audio_format: f }
+        : { kind: "video", url: it.url, referer: m.pageUrl, container: f };
+      enqueue(req).then(reply);
     } else {
       queueDownloads([{ url: it.url, filename: "Web Media/Fichiers/" + nameFromUrl(it.url, "media") }]).then(() => reply({ ok: true }));
     }

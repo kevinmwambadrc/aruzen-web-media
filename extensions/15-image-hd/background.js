@@ -1,3 +1,4 @@
+import { downloadConverted } from "./shared/convert.js";
 import { queueDownloads, hostOf } from "./shared/dlqueue.js";
 import { hdVariants } from "./hd.js";
 import { fileName } from "./names.js";
@@ -62,6 +63,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 chrome.runtime.onMessage.addListener((m, _s, reply) => {
   if (m.cmd !== "download") return;
   const dir = `Web Media/Images HD/${hostOf(m.pageUrl)}/`;
-  queueDownloads(m.urls.map((u, i) => ({ url: u, filename: dir + fileName(u, i) }))).then(() => reply({ ok: true }));
+  const items = m.urls.map((u, i) => ({ url: u, filename: dir + fileName(u, i) }));
+  (m.fmt ? downloadConverted(items, m.fmt, 0.95) : queueDownloads(items)).then(() => reply({ ok: true }));
   return true;
 });

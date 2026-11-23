@@ -2,7 +2,11 @@
 
 # Image HD
 
-**Retrouve l'original haute définition des images, même quand le site n'affiche qu'une miniature.** · version 1.0.0 · catégorie : Images & documents
+**Retrouve l'original haute définition des images, même quand le site n'affiche qu'une miniature.** · version 2.0.0 · catégorie : Images & documents
+
+## Nouveau dans la 2.0
+
+- Enregistrement au format d'origine, PNG, JPG ou WEBP
 
 ## Fonctionnalités
 

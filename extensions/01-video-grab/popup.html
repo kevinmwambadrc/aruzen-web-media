@@ -5,11 +5,29 @@
   <header><img src="icons/32.png" alt=""><h1>Vidéo Grab</h1><span class="grow"></span><button id="folder" class="mini">Dossier</button></header>
   <main>
     <div id="info" class="card"><div class="mut">Analyse de la page…</div></div>
+    <h2>Format</h2>
+    <div id="formats"></div>
     <div class="row">
-      <label>Qualité <select id="quality"><option value="best">Meilleure</option></select></label>
-      <label>Format <select id="container"><option value="mp4">MP4</option><option value="mkv">MKV</option></select></label>
+      <label id="qWrap">Qualité <select id="quality"><option value="best">Meilleure</option></select></label>
+      <label id="aqWrap" hidden>Débit <select id="aq"></select></label>
+      <label id="codecWrap">Codec <select id="vcodec">
+        <option value="compat">Compatible (H.264)</option>
+        <option value="best">Meilleure qualité (4K, AV1/VP9)</option>
+      </select></label>
     </div>
+    <details class="adv" id="adv">
+      <summary>Extrait et options</summary>
+      <div class="row">
+        <label>Début <input id="start" class="time" type="text" placeholder="0:00"></label>
+        <button id="startNow" class="mini" title="Position actuelle de la vidéo">⏱</button>
+        <label>Fin <input id="end" class="time" type="text" placeholder="fin"></label>
+        <button id="endNow" class="mini" title="Position actuelle de la vidéo">⏱</button>
+        <button id="clip0" class="mini" title="Vidéo entière">✕</button>
+      </div>
+      <div class="row"><label id="subsWrap"><input type="checkbox" id="subs"> Intégrer les sous-titres (fr, en)</label></div>
+    </details>
     <div class="row"><input id="url" type="text" class="grow" placeholder="Ou colle un lien vidéo…"><button id="go" class="primary">Télécharger</button></div>
+    <div id="msg" class="small"></div>
     <h2>Téléchargements</h2>
     <div id="jobs" class="jobs"></div>
   </main>

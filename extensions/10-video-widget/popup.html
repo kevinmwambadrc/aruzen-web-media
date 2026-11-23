@@ -8,12 +8,25 @@
       <label class="grow"><input type="checkbox" id="enabled"> Boutons au survol des vidéos</label>
       <button id="site" class="mini"></button>
     </div>
+    <h2>Format du bouton ⬇ (vidéo)</h2>
+    <div id="vfmt"></div>
+    <h2>Format du bouton ♪ (audio)</h2>
+    <div id="afmt"></div>
     <div class="row"><label>Qualité vidéo
-      <select id="quality"><option value="best">Meilleure</option><option value="2160">4K</option><option value="1080">1080p</option><option value="720">720p</option><option value="480">480p</option></select></label></div>
+      <select id="quality"><option value="best">Meilleure</option><option value="2160">4K</option><option value="1440">1440p</option><option value="1080">1080p</option><option value="720">720p</option><option value="480">480p</option><option value="360">360p</option></select></label>
+      <label>Codec <select id="vcodec"><option value="compat">Compatible (H.264)</option><option value="best">Meilleure qualité</option></select></label>
+      <label>Débit audio <select id="aq"></select></label></div>
+    <div class="mut small">Au survol d'une vidéo, ▾ ouvre la liste de tous les formats pour un téléchargement ponctuel.</div>
     <h2>Performance</h2>
     <div class="card row">
       <label>Téléchargements simultanés <select id="par"><option>1</option><option>2</option><option>3</option><option>4</option></select></label>
       <label><input type="checkbox" id="low"> Priorité basse (le Mac reste fluide)</label>
+    </div>
+    <div class="card row">
+      <label class="grow">Comptes connectés <select id="cookies">
+        <option value="">Aucun</option><option value="edge">Microsoft Edge</option><option value="chrome">Google Chrome</option>
+        <option value="safari">Safari</option><option value="firefox">Firefox</option><option value="brave">Brave</option></select></label>
+      <div class="mut small">Pour les stories, vidéos privées ou réservées aux abonnés : yt-dlp lit tes sessions de ce navigateur, sur ce Mac uniquement. macOS peut demander une fois l'accès au trousseau.</div>
     </div>
     <div class="row"><h2 class="grow">Tous les téléchargements</h2><button id="clear" class="mini">Effacer les terminés</button></div>
     <div id="jobs" class="jobs"></div>
